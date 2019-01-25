@@ -901,8 +901,15 @@ We wanted to see how the perceived quality of the releases of the different mobi
 
 \section{Analysis of the NPM Data: Results}\label{s:npm}
 
-As mentioned before, for the analysis of the NPM data
+As mentioned before, for the analysis of the NPM data we focused on the timeline of the entire packages, instead of the individual releases of a package to reduce the effect of the downloads by bots and other automated sources. Since we had only three variables in our dataset, we decided to go for the simpler liner model. We had the total number of reported issues for the package as the response variable and observed how much the number of daily downloads, before and after controlling for the calender date, explained it. 
 
+We found that out of the 4430 packages, only for 36 packages the p-value of the predictor variable was more than 0.05 before adjusting for the calender date, and after adjusting for the calender date, p-value was less than 0.5 (\emph{i.e.} the predictor was deemed significant) for all 4430 packages. 
+
+The $R^2$ values of the fitted models varied between 0 and 0.8637 (median: 0.4982, standard deviation: 0.0618) before adjusting for the calender date , and between 0.019 and 0.999 (median: 0.9195, standard deviation: 0.0618) after  adjusting for the calender date. So, we can say that the number of daily downloads is a significant and important predictor for the number of issues encountered by the users for most of the packages. 
+
+Since we just established that the number of issues of an NPM package depends on the number of daily downloads, a similar quality metric of number of issues per download should be applicable in this situation as well. 
+
+By calculating the quality metric in this way, we found that for different packages, it varied between 1.789 and 3531 (median: 12.755, standard deviation: 344.54). Further inspection showed that the value of the quality variable increases with time for almost half of the packages (2030 out of 4430 packages, 45.8\%), unlike what we observed for the mobile applications, where for almost all of the releases of the three softwares, the value of the quality variable decreased with time. 
 
 \section{Implication of our Findings}\label{s:implication}
 
