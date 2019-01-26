@@ -25,6 +25,30 @@
 \usepackage{graphicx}
 \usepackage{pbox}
 \usepackage{hyperref}
+\usepackage{booktabs} % For formal tables
+\usepackage{xspace}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{fancybox}
+\usepackage{balance}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\epstopdfsetup{outdir=./}
+
+
+
+\newcommand{\hypobox}[1]{
+
+        \begin{center}\noindent\thicklines\setlength{\fboxsep}{8pt}\cornersize{0.2}\ovalbox{
+
+                \begin{minipage}{3.0in}
+
+                        \textit{#1}
+
+                \end{minipage}} 
+
+        \end{center}} 
+
 %
 % \usepackage{mathptmx}      % use Times fonts if available on your TeX system
 %
@@ -911,14 +935,253 @@ Since we just established that the number of issues of an NPM package depends on
 
 By calculating the quality metric in this way, we found that for different packages, it varied between 1.789 and 3531 (median: 12.755, standard deviation: 344.54). Further inspection showed that the value of the quality variable increases with time for almost half of the packages (2030 out of 4430 packages, 45.8\%), unlike what we observed for the mobile applications, where for almost all of the releases of the three softwares, the value of the quality variable decreased with time. 
 
+Here we show the timelines of the quality variable we defined (\emph{i.e.} in this case, number of issues per download) for a few selected well-known NPM packages for illustration. We see that ``angular''(Fighure~\ref{fig:tNa}) and ``eslint''(Fighure~\ref{fig:tNe}) have a trend similar to what we saw for the mobile apps, with the value of the quality variable decreasing with time, but ``babel''(Fighure~\ref{fig:tNb}) is showing an increase in the value, while for ``ember-cli'', the trend is overall constant over time.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.5\linewidth]{angular}
+\caption{Timeline for Quality Variable for NPM package: angular}
+\label{fig:tNa}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.5\linewidth]{babel}
+\caption{Timeline for Quality Variable for NPM package: babel}
+\label{fig:tNb}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.5\linewidth]{eslint}
+\caption{Timeline for Quality Variable for NPM package: eslint}
+\label{fig:tNe}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.5\linewidth]{ember-cli}
+\caption{Timeline for Quality Variable for NPM package: ember-cli}
+\label{fig:tNe}
+\end{figure}
+
+
 \section{Implication of our Findings}\label{s:implication}
+
+Our analysis makes it evident that the number of new
+users  is the most important variable in explaining various post-release variables, as seen in all three of the mobile applications as well as for the NPM packages. 
+The analysis also indicates that more new users for a release indicate 
+more exceptions being found for the software
+and, for the GA releases of both the apps analyzed, longer activity for the release (the duration
+of a release measures how long a release is actively used by users,
+not the time between two releases, since the releases overlap).  This
+suggests that users  may 
+ be reluctant to upgrade (or are encouraged to stay) on better-quality releases.
+ Our findings are in agreement with findings
+of~\cite{IQ08,hmps15,mockus2005predictors} that consider 
+post-release defects for a completely different server software system.
+
+The release date also affects no. of exceptions, as can be observed by looking 
+at the coefficients. It provides some insight on
+how this software has evolved.  
+Even after compensating for the effect the number of
+users have on the number of exceptions, the number of exceptions are
+increasing with time for the Android app, whereas is decreases for the iOS app. 
+This may indicate that as the software, the OS, as well as the hardware are becoming 
+more complex with time, which is consistent with a rapid growth of
+functionality and the size of associated code base, the Android app is seeing more crashes due to the variations in the devices and the OS, whereas for iOS, since the devices as well as the OS versions are tightly controlled, the users are seeing less issues,   although we have no explicit evidence to support our speculation. 
+
+We found from the timeline that, as a general trend, most of exceptions occur very early after the release, then as the number of users increase, the perceived quality of the release improves as well.
+
+
+An interesting observation from the model is the lack of any direct relationship 
+between exceptions and the intensity or frequency of usage.
+One possibility is that exceptions happen for specific Android/
+iOS version/ Phone combination and the way each user is exercising application's
+functionality. Users for whom the application crashes must wait for
+the next release. This would lead to the observed phenomena where
+only the new users increase the number of crashes, which was observed more 
+clearly from the timeline of crashes as well. The duration 
+an application is used by individual users was found to have a much
+smaller effect on reported defects than the number of
+new users in prior work~\cite{hmps15,IQ08,MZL05} as well. In particular, it was observed
+that most of the issues happen soon after deploying the release 
+and the chances of reporting a defect for a new release drops 
+very rapidly with time after installation.
+
+We observed that for the NPM packages we analyzed, the number of downloads is a significant predictor for the number of issues for  most of the NPM packages, so a similar quality measure was used for this case as well. 
+However, unlike the three mobile apps, where the value of our quality metric decreases with time for all releases, for the NPM packages the quality metric sometimes increases or remain relatively constant over time (around 45.8\% of the time). 
+
+Our data, scripts, and more detailed results are available in our GitHub repository: \url{https://github.com/tapjdey/release\_qual\_model}.
+
+\hypobox{%Aim 1 - key revelations:\\
+We found that the exceptions are a result of more new users and the extent
+of usage does not appear to have a direct effect on the number of new users.
+}
+ 
+Overall, none of the three models indicate that ``Usage.Frequency'' or ``Usage.Intensity'' have any effect on the ``Quality'' variable. We, therefore, suggest that the exceptions per new user can be used as a software development quality metric to compare quality of different releases and to quantifying the impact of variables representing the development process of a release.
 
 
 \section{Limitations}\label{s:limitation}
 
+In terms of modeling aspects, there are some limitations related to the different approaches.
+ The RF model was used for 10 fold cross-validation, and exhibited a rather high value of standard deviation in the $R^2$ value, and it even went negative a few times indicating a very bad fit~\cite{negRsq},  likely due to the small sample size and not having good predictors in some models.
+
+While creating the BN model we did not cover all possible ways BNs can be applied to gain insight into the system. For example, we did not investigate the possible existence of any hidden node, or make an effort to formally establish the causal relationship between the nodes. We also did not investigate how the properties of one release affect the subsequent releases, nor did we investigate the presence of any feedback loops.
+
+In the simulation study, although we covered an extensive set of options, we did not try every possible combination of options for the BN structure search exercise.
+
+We also did not use Markov Random Field analysis, which is another probabilistic graphical modeling approach. The primary reason behind choosing the BN approach was that we found an example where this method was used to successfully recover the underlying network~\cite{bnppt}. 
+Moreover, it is possible to interpret a BN model as a causal model, and although we did not use that interpretation in this study, our goal is to eventually establish a causal mechanism of how usage affects the number of exceptions/defects experienced by users, so we wanted to used BN from the start.
+
+
+The accuracy of our result is very much dependent on the Google
+Analytics data. While we do not have reasons to doubt the accuracy of
+the counts in Google
+Analytics data, we would have liked to have better definitions of
+how it determines ``New User'', ``Visit'', and, especially,
+nontrivial to aggregate quantities such as ``Visits per User.'' Also,
+it is not clear if Google
+Analytics distorts data in any way (e.g., by applying differential 
+privacy transformations) for low counts in order to protect
+the privacy of the users. We do not believe it does, but we have not
+conducted an experiment to validate that. 
+
+Furthermore, the projects under consideration were relatively new and
+it was the first attempt for the team to deploy mobile software. As
+such, much was not well documented and was rapidly
+evolving over time. As mentioned earlier, we did not have the official release
+dates for all releases, so we put the start date of the release as
+the date on which the first usage was reported. However, we did
+verify the official dates with this reported date for the releases
+for which we found the release date, and they were very close, but
+not always exactly the same. This should not affect
+the overall result, given the total time scale of more than two
+years. The release end dates, by their nature, have to be estimated 
+based on user activity, since there is no way to force end user
+to upgrade Android app. For recent releases, therefore, the end date 
+may be censored by our data
+collection date, hence the duration for these releases might be
+underestimated. 
+
+It may be possible to collect numerous additional variables that may
+have an impact on exceptions, for example, the number of changes to
+the source code made for a release as was done
+in~\cite{IQ08}. Unfortunately, due to the nature of parallel
+development for multiple releases and products noted in
+subsection~\ref{sub:soft}, it was virtually impossible to separate
+the changes that would only affect the specific release on the Android
+platform. There might be other unobserved variables driving some
+relationships, but not explored in this study. 
+
+Our model is obtained on a single set of mobile applications 
+from a specific domain, implemented via
+a rather complex codebase and is certainly not representative of
+most mobile applications that tend to be much simpler. Furthermore,
+mobile applications  
+may not represent other types of software further limiting external
+validity of the results. However, some aspects that we see in the
+specific application, such as increasing number of faults with the
+number of users, has been observed in rather different contexts of
+large-scale server software. This suggests that the model derived in
+the study may generalize to other domains as well. 
+
+The study of the NPM packages was rather limited in scope, since we
+only looked at the popular (having more than 10,000 monthly downloads 
+since January 2018) packages to reduce the effect of downloads by 
+automated sources. We didn't look at the effects of other factors 
+that affect the number of downloads, \emph{e.g.} the number of 
+dependents a package has. Although some of the issues could come 
+from users of a dependent package, we didn't actively check the
+origins of the issues to verify that. We also didn't look at the
+releases of the packages, because of reasons mentioned before.
+We didn't differentiate between the types of the issues, because we 
+just wanted to see how many times a user decided to file an issue.
+Overall, this study was not a direct extension of the previous work,
+rather, it was an extension of the concept and its application in a different domain.
+
 
 
 \section{Conclusion}\label{s:conclusion}
+
+From the practical perspective we have established
+that the extent of use has very strong relationship with the number
+of exceptions for three large mobile applications from 
+the telecommunication domain. Counting exceptions,
+therefore, will not accurately measure the quality of software
+development process but, instead, it would strongly depend on the
+extent of use. In order to produce a measure that the development
+team can use to understand and improve quality of their software
+development process, we proposed to normalize exceptions by usage
+based on the Bayesian Network models. Notably, a similar
+normalization was previously proposed in the context of post-release
+defects that also exhibited strong positive correlation with the
+number of users.  As a larger proportion of applications are mobile
+and/or delivered as a service, the amount of usage can be relatively
+easily be collected.  Consequently, not adjusting software
+development measures for usage should not be considered as an
+excusable practice.
+
+From the theoretical perspective we provided the explanation of the
+relationships among post-deployment quantities using Linear
+Regression and Bayesian Networks. Linear Regression can be thought
+as a special Bayesian Network with the response node being
+potentially connected to each predictor node. Bayesian Networks
+allow for exploration of relationships among all variables and
+empirical determination of the relationships exhibited in a
+particular dataset.  Both models indicate that there are only two
+variables that are related to exceptions in this data: number of
+users and release date which we used as a proxy for the release
+quality. It would be preferable to have each release as a separate
+categorical predictor, but because for simplicity we chose to use
+only one observation per release, it could not be done. If, instead,
+we considered exceptions during different periods of a release, that
+would have allowed us to introduce such categorical variable and
+interpret the estimated coefficient for each release as release
+quality (higher number meaning lower quality).
+
+We also established
+that it is possible to predict exceptions using Random Forest
+modeling techniques and that usage plays a key role for the accuracy
+of these predictions. As noted above, prediction is a different task
+than explanation and, even though it often yields more accurate
+results, the prediction results may be harder to explain to
+developers or managers and, therefore, harder to act upon. We
+believe the findings do have a message for the voluminous research
+in defect prediction. While defects are not exceptions, usage was
+also found to affect post-release defects in a similar
+manner~\cite{caper,hmps15,mockus2005predictors}. It would, therefore, be advisable to 
+incorporate forecasts of usage into defect prediction models  to increase their accuracy.
+
+We hope that this work will spur more research on software engineering
+aspects in post-deployment stage because, like mobile applications, 
+modern web applications are even more reliant on usage monitoring not
+simply from the perspective of crash counting but also because the
+usability or even revenue stream from the software applications
+critically depends on how users behave. 
+
+From the practical perspective, we hope that any mobile or web
+software project can easily apply and refine the presented approach
+of using Google Analytics data to improve the quality of their
+software.  Any Android OS or Apple iOS mobile application can freely use
+Google Analytics to monitor application usage and crashes, so the
+approach should be widely applicable. Despite that, we 
+are not aware of any prior empirical study that would leverages Google
+Analytics or similar data for software quality modeling.
+
+
+Finally, much more work is needed to gather additional empirical
+evidence of how software behaves post-deployment. It is important to
+note that Google Analytics data is available only for application
+developers, so while each project has the ability to see their App's
+performance, they can not see data for software created by other
+organizations. This can be addressed by a) projects sharing theirs
+post-deployment data (we have not seen examples of that); or b)
+publishing findings based on such data in cases such as ours,
+where the data itself would be impossible to release publicly since
+it involves numerous, often enterprise, customers who may not agree.
+
+
 
 
 %\begin{acknowledgements}
