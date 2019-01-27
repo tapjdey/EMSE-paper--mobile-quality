@@ -149,16 +149,16 @@ two different softwares or two different releases of a software,
 we first calculate the number of crashes for each and then compare
 these numbers. Software with more users, however, tends
 to see more crashes~\cite{dey2018modeling,hmps15,IQ08} as each user
-may exercise it differntly. In
+may exercise it differently. In
 an extreme case, a software or a release with no users will have
 no crashes, regardless of its quality. This interdependence of
 software usage volume and crashes experienced is typically not
 considered in quality measurement in industry or in empirical studies (although few studies
 do note that~\cite{fenton2008using,fenton1999critique}).
-Ignoring this relationship, however, would misguid quality
-improvement efforts (avoid quality improvemets for low usage
+Ignoring this relationship, however, would misguide quality
+improvement efforts (avoid quality improvements for low usage
 releases) and/or misguided developer
-performance metrics (reward developers of low-usage poducts). This analogy can also be extended for software
+performance metrics (reward developers of low-usage products). This analogy can also be extended for software
 defects (bugs) as well, and by extension for issues raised against a
 software, since software crashes are manifestations of underlying
 defects and~\cite{caper,hmps15} observed that the number of
@@ -183,7 +183,7 @@ In our previous work~\cite{dey2018modeling}, we only analyzed the General Availa
 Furthermore, we proposed a quality metric of average number of exceptions experienced by end users (so lower means better) and found it to be independent of other usage metrics. 
 
 In this study, we have added the analysis of the development version of Avaya Communicator for Android and the
-General Availability releases of Avaya one-X\textregistered  Mobile SIP iOS Client. Although we collected data for several other releases, those were dropped due to having too few releases/ exceptions/ users to give a reliable result. We employed the same set of analysis methods and found the result to be very similar for all cases considered and it matched our result of the previous analysis as well. We also added a timeline showing how the perceived quality of the releases vary with time for different releases.  
+General Availability releases of Avaya one-X\textregistered  Mobile SIP iOS Client. Although we collected data for several other apps, those were dropped due to having too few releases/ exceptions/ users to give a reliable result. We employed the same set of analysis methods and found the result to be very similar for all cases considered and it matched our result of the previous analysis as well. We also added a timeline showing how the perceived quality of the releases vary with time for different releases.  
 
 We have also applied our method of analysis to a very different scenario of NPM packages. Node Package Manager (NPM) is the package manager for node.js, an open-source, cross-platform JavaScript run-time environment. 
 Since we do not have the number of crashes for these packages, we looked at the number of issues reported for these packages instead.
@@ -758,21 +758,21 @@ obtained by averaging 50,000 candidate networks. We used a Threshold of 0.85, as
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\linewidth]{AGA}%
+\includegraphics[width=0.7\linewidth]{AGA}%
 \caption{Final BN Model for GA releases of Avaya Communicator for Android (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link) }
 \label{fig:finalAGA}
 \end{figure}
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\linewidth]{AD}%
+\includegraphics[width=0.7\linewidth]{AD}%
 \caption{Final BN Model for Development releases of Avaya Communicator for Android (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link) }
 \label{fig:finalAD}
 \end{figure}
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\linewidth]{i}%
+\includegraphics[width=0.7\linewidth]{i}%
 \caption{Final BN Model for GA releases of Avaya mobile SIP client for iOS (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link) }
 \label{fig:finalI}
 \end{figure}
@@ -853,21 +853,21 @@ variable importance plot still shows the number of new users is the most importa
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.5\linewidth]{rfAGA}%
+\includegraphics[width=0.4\linewidth]{rfAGA}%
 \caption{Variable Importance Plot of RF model for ``Exceptions" for GA release data of Avaya Communicator for Android}
 \label{fig:rfAGA}
 \end{figure}
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.5\linewidth]{rfAD}%
+\includegraphics[width=0.4\linewidth]{rfAD}%
 \caption{Variable Importance Plot of RF model for ``Exceptions" for development release data of Avaya Communicator for Android}
 \label{fig:rfAD}
 \end{figure}
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.5\linewidth]{rfI}%
+\includegraphics[width=0.4\linewidth]{rfI}%
 \caption{Variable Importance Plot of RF model for ``Exceptions" for GA releases of Avaya mobile SIP client for iOS}
 \label{fig:rfI}
 \end{figure}
@@ -935,21 +935,21 @@ Finally, for the GA releases of Avaya mobile SIP client for iOS, the LR model sh
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.7\linewidth]{qAGA}%
+\includegraphics[width=0.6\linewidth]{qAGA}%
 \caption{Bayesian Network  Model for ``Quality" - GA releases of Avaya Communicator for Android (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link)}
 \label{fig:bn2AGA}
 \end{figure}
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.7\linewidth]{qAD}%
+\includegraphics[width=0.6\linewidth]{qAD}%
 \caption{Bayesian Network  Model for ``Quality" - Development releases of Avaya Communicator for Android (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link)}
 \label{fig:bn2AD}
 \end{figure}
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.7\linewidth]{qI}%
+\includegraphics[width=0.6\linewidth]{qI}%
 \caption{Bayesian Network  Model for ``Quality" - GA releases of Avaya mobile SIP client for iOS (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link)}
 \label{fig:bn2I}
 \end{figure}
@@ -957,21 +957,21 @@ Finally, for the GA releases of Avaya mobile SIP client for iOS, the LR model sh
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.5\linewidth]{rfqAGA}
+\includegraphics[width=0.4\linewidth]{rfqAGA}
 \caption{Variable Importance plot from the Random Forest  Model for Quality Variable - GA releases of Avaya Communicator for Android}
 \label{fig:rf2AGA}
 \end{figure}
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.5\linewidth]{rfqAD}
+\includegraphics[width=0.4\linewidth]{rfqAD}
 \caption{Variable Importance plot from the Random Forest  Model for Quality Variable - Development releases of Avaya Communicator for Android}
 \label{fig:rf2AD}
 \end{figure}
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.5\linewidth]{rfqI}
+\includegraphics[width=0.4\linewidth]{rfqI}
 \caption{Variable Importance plot from the Random Forest  Model for Quality Variable - GA releases of Avaya mobile SIP client for iOS}
 \label{fig:rf2I}
 \end{figure}
