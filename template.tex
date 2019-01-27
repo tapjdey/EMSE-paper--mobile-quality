@@ -64,7 +64,7 @@
 %
 \begin{document}
 
-\title{Introducing a Usage-Independent Software Quality Metric }
+\title{Deriving a Usage-Independent Software Quality Metric }
 %\subtitle{Do you have a subtitle?\\ If so, write it here}
 
 %\titlerunning{Short form of title}        % if too long for running head
@@ -102,7 +102,36 @@
 
 \section{Introduction}\label{s:intro}
 
-Software Quality has been an important factor for software developers and users alike since the beginning of software development. Today's software is a complex form of intellectual product with many different aspects, thus the term ``Quality'' has many different interpretations as well. In this paper, we look at software quality from the perspective of its users. Besides functionality and ease-of-use, an important factor for the users of a software is the number of times it crashes. A software that keeps crashing often is generally deemed to be of poor quality in terms of usability. Thus, it might sound reasonable to compare the qualities of two different softwares or two different releases of a software by comparing the total number of times it crashes. This, however, is not the right thing to do, since a software with more users is expected to see more crashes~\cite{dey2018modeling,hmps15,IQ08}. In the extreme case, a software or a release with zero users will have zero crashes, regardless of its quality. This interdependence of software usage volume and crashes experienced is often not considered in industry or in empirical studies (although few studies do note that~\cite{fenton2008using,fenton1999critique}) and may lead to misguided quality improvement efforts and/or misguided developer performance metrics. This analogy can also be extended for software defects (bugs) as well, and by extension for issues raised against a software, since software crashes are manifestations of underlying defects and~\cite{caper,hmps15} observed that the number of discovered software defects increases with the number of users, although the relationship between crashes and defects is not very well understood~\cite{fenton1999critique}. 
+Improving quality of software is one of the objectives of software
+engineering.  ``Software Quality'' has been defined in various ways,
+but in this paper we take a narrow focus on the manifestation of software
+defects as crashes observed from the perspective of the
+users. Observing a software crash, generally speaking, a is
+manifestation of low quality to a user of the software. 
+Thus, it seems intuitive to measure the quality of software\footnote{in fact, we
+  mean to measure one aspect of the quality of software}
+by counting the number of crashes. More crashes would be associated
+with lower quality. If, for example, we compare 
+two different softwares or two different releases of a software,
+we first calculate the number of crashes for each and then compare
+these numbers. Software with more users, however, tends
+to see more crashes~\cite{dey2018modeling,hmps15,IQ08} as each user
+may exercise it differntly. In
+an extreme case, a software or a release with no users will have
+no crashes, regardless of its quality. This interdependence of
+software usage volume and crashes experienced is typically not
+considered in quality measurement in industry or in empirical studies (although few studies
+do note that~\cite{fenton2008using,fenton1999critique}).
+Ignoring this relationship, however, would misguid quality
+improvement efforts (avoid quality improvemets for low usage
+releases) and/or misguided developer
+performance metrics (reward developers of low-usage poducts). This analogy can also be extended for software
+defects (bugs) as well, and by extension for issues raised against a
+software, since software crashes are manifestations of underlying
+defects and~\cite{caper,hmps15} observed that the number of
+discovered software defects increases with the number of users,
+although the relationship between crashes and defects is not very
+well understood~\cite{fenton1999critique}.  
 
 One possible reason for this oversight is the scarcity of reliable usage data. While the number of defects and crashes reported by users are carefully tracked by most large scale projects (\textit{e.g.} Mozilla Firefox, Ubuntu etc.), tracking the variables related to usage, \textit{e.g.} the number of users, intensity of usage etc. is almost impossible to track without a reliable monitoring system. Such a system is rarely used by open-source softwares and even many traditional software-as-a-product systems do not or can not have such capability. Moreover, even when such a dataset is available, it is almost always proprietary, so obtaining and sharing it, even for the software development teams in these proprietary projects, is difficult since the deployment is typically managed by a different team within the organization. Without such data, however, it becomes exceedingly difficult to interpret the quality of a software from the customer reported crashes/defects alone due to the interdependence of usage and crashes/defects~\cite{dey2018modeling,hmps15,IQ08}.
 
