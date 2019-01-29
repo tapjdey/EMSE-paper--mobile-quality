@@ -89,29 +89,34 @@
 \maketitle
 
 \begin{abstract}
- Context: The way post-release usage of a software affects the number of
- faults biases quality metrics and may adversly affect
- associated decisions. The proprietary nature of such data prevented
- wider exploration of the subject in the past.
+ Context: The extent of post-release use of software affects the number of
+ faults, thus biasing quality metrics and adversly affecting
+ associated decisions. The proprietary nature of usage data limited 
+ deeper exploration of this subject in the past.
  %The commonly used quality measure of post-release faults may, therefore, 
  % reflect usage instead of the quality of the software development process.
- Objective: To determine  how software faults and software use are related in a 
-  post-deployment scenario and, based on that, derive post-deployment quality 
-  measure that reflects developers' performance more accurately.  
-Method: We analyze
-  Google Analytics data counting daily new users, visits,  time-on-site, 
-  visits per user, and release start date and duration for two complex 
-  proprietary mobile applications, one for iOS (General Availability 
-  version) and one for Android (Development and General Availability versions).
-  We utilize Linear Regression, Bayesian Network (a simulation exercise was performed
-  for determining the best BN structure search method that was used during our analysis), and Random Forest 
-  models to   explain the interrelationships and to derive release 
-  quality measure that is relatively stable with respect to variations 
-  in software usage.  We also present a timeline for observing when 
-  the exceptions typically occur in the release duration. 
-  We further extended our study and looked into 4430 NPM packages that had more than 10,000 
-  monthly downloads (since January, 2018) and looked at the interaction between the number of 
-  downloads and the number of issues reported against that package.
+ Objective: To determine how software faults and software use are
+   related and how, based on that, an accurate post-deployment quality 
+   measure can be designed.  
+Method: We measure daily new users, visits,  time-on-site, 
+  visits per user, and release start date and duration for complex 
+  proprietary mobile applications for Abdroid and IOS platforms via Google Analytics.
+  %data counting daily new users, visits,  time-on-site, 
+  %visits per user, and release start date and duration for two complex 
+  %proprietary mobile applications, one for iOS (General Availability 
+  %version) and one for Android (Development and General Availability versions).
+  We utilize Linear Regression, Bayesian Network, and Random Forest % (a simulation exercise was performed
+  %for determining the best BN structure search method that was used during our analysis), and Random Forest 
+  models to explain the interrelationships and to derive usage
+  independent release 
+  quality measure. % that is relatively stable with respect to variations in software usage.
+  %We also present a timeline for observing when the exceptions typically occur in the release duration. 
+  To increase external validity, we also investigate usage
+  (downnloads) and quality (the number of issues) reported for 4430
+  popular NPM packages.
+  %into 4430 NPM packages that had more than 10,000 
+  %monthly downloads (since January, 2018) and looked at the interaction between the number of 
+  %downloads and the number of issues reported against that package.
 Results: We found the number of new users to be 
   the primary factor determining the number of exceptions, and found no
   direct link between the intensity and frequency of software usage and 
