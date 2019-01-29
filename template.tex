@@ -249,7 +249,7 @@ using \textbf{post-release} data in mobile application context, and (2) proposin
 
 \section{Software Studied}\label{s:soft}
 
-For this study, we looked into two different types of software, which are vastly different in nature. The primary focus of the study is on the commercial software developed by Avaya for mobile applications, which are from the telecommunication domain. For external validation of the theory developed using this data, we looked into the NPM packages, which are mostly open-source JavaScript packages used in web-development. In this section, we provide some details about the two to help contextualize our study.
+For this study, we looked into two different types of software, which are vastly different in nature. The primary focus of the study is on the commercial software developed by Avaya for mobile applications, which are from the telecommunication domain. For external validation of the theory developed using this data, we looked into the NPM packages, which are open-source JavaScript packages used in web-development. In this section, we provide some details about the two to help contextualize our study.
 
 \subsection{The Mobile Applications developed by Avaya}
 One of the software chosen for this study was Avaya Communicator for
@@ -287,7 +287,7 @@ Node Package Manager or NPM is one of the most active and dynamic software ecosy
 \section{Details of the Data}\label{s:data}
 
 \subsection{Data on mobile applications collected from Google Analytics}
-The post-deployment data for this application was obtained from the 
+The post-deployment data for the mobile applications were obtained from the 
 Google Analytics platform.
 Google Analytics is a web analytics service offered by
 Google that tracks and reports website traffic. It is now one of the most
@@ -716,7 +716,9 @@ We chose LR for the simplicity, robustness and ease of interpretation. To better
 predictive capabilities of our models we used RF, which is known as one of the best Machine Learning classifiers. That way we could both obtain the most insight and also to validate our findings through the use of radically different approaches.
 
 \subsection{Linear Regression Model}
-We first used a linear regression model to discover the significant variables affecting the number of exceptions. The  output  of the fitted model is shown in Table~\ref{t:LR1}.The model resulted in a decent fit for the GA releases of Avaya Communicator for Android, given the sample size of 173, with adjusted $R^2$ of 0.481 (which is higher than  0.435, the adjusted $R^2$  reported with our previous approach~\cite{dey2018modeling}), and the variable ``New.Users'' was the most significant predictor while ``Release.Date'', ``Usage Intensity'', and ``Usage Frequency'' were also statistically significant. 
+We first used a linear regression model to discover the significant variables affecting the number of exceptions. The  output  of the fitted model is shown in Table~\ref{t:LR1}.The model resulted in a decent fit for the GA releases of Avaya Communicator for Android, given the sample size of 173, with adjusted $R^2$ of 0.481 (which is higher than  0.435, the adjusted $R^2$  reported with our previous approach~\cite{dey2018modeling}), and the variable ``New.Users'' was the most significant predictor while ``Release.Date'', ``Usage Intensity'', and ``Usage Frequency'' were also statistically significant. For the development releases of the same, only ``New.Users'' was significant, and it resulted in a good fit, with adjusted $R^2$ of 0.781.
+Finally, for the GA releases of Avaya mobile SIP client for iOS, the value of $R^2$ was 0.874, and ``New.Users'', ``Release.Date'', and ``Release.Duration'' were the significant variables.
+
 
 \begin{table}[ht]
 \caption{Summary Result of LR model for ``Exceptions"}\label{t:LR1}
