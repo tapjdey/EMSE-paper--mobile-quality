@@ -98,9 +98,9 @@
  Objective: To determine how software faults and software use are
    related and how, based on that, an accurate post-deployment quality 
    measure can be designed.  
-Method: We measure daily new users, visits,  time-on-site, 
+Method: Via Google Analytics we measure daily new users, visits,  time-on-site, 
   visits per user, and release start date and duration for complex 
-  proprietary mobile applications for Abdroid and IOS platforms via Google Analytics.
+  proprietary mobile applications for Android and iOS. % via Google Analytics.
   %data counting daily new users, visits,  time-on-site, 
   %visits per user, and release start date and duration for two complex 
   %proprietary mobile applications, one for iOS (General Availability 
@@ -120,17 +120,20 @@ Method: We measure daily new users, visits,  time-on-site,
 Results: We found the number of new users to be 
   the primary factor determining the number of exceptions, and found no
   direct link between the intensity and frequency of software usage and 
-  software faults. Furthermore, the relative increase in the number of
-  crashes was found to be associated with a power of around 1.02-1.04 relative increase
-  in the number of new users for the android app, and around 1.6 for the iOS app. Based on the findings we
-  propose a release quality measure: number of crashes per user for a 
-  release of the software, which was seen to be independent of
-  any other usage variables, providing us with a usage independent
-  measure of software quality. From the study of the NPM packages we found that the
-  number of downloads has a strong effect on the number of issues for almost all the packages.
-  However, we found from the timeline analysis that for 45.8\% of the packages, the number of issues 
-  per download increases with time, unlike for the releases of the mobile app where the exceptions per user 
-  decrease with time for almost all releases.
+  software faults. %Furthermore, the relative increase in the number of
+  %crashes was found to be associated with a power of around 1.02-1.04 relative increase
+  %in the number of new users for the android app, and around 1.6 for the iOS app. Based on the findings we
+  Crashes increased with the power of 1.02-1.0 of new user on
+  Android and power of 1.6 on iOS. % propose a release quality measure:
+  Release quality expressed as crashes per user was independent of
+  other usage-related predictors, thus serving as a usage independent
+  measure of software quality. Susage also affected quality in NPM, where
+  downloads were strongly associated with numbers of issues for
+  almost all packages. Unlike in mobile case where exceptions per
+  user decrease over time, %However, we found from the timeline analysis that for
+  for 45.8\% of the NPM packages the number of issues per download
+  increase.
+  % over time time, unlike for the releases of the mobile app where the exceptions per user decrease with time for almost all releases.
 Conclusions: We expect our result and our proposed quality measure will help
   gauge release quality of a software more accurately and inspire further 
   research in this area.
