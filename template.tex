@@ -90,7 +90,7 @@
 
 \begin{abstract}
  Context: The extent of post-release use of software affects the number of
- faults, thus biasing quality metrics and adversly affecting
+ faults, thus biasing quality metrics and adversely affecting
  associated decisions. The proprietary nature of usage data limited 
  deeper exploration of this subject in the past.
  %The commonly used quality measure of post-release faults may, therefore, 
@@ -123,11 +123,11 @@ Results: We found the number of new users to be
   software faults. %Furthermore, the relative increase in the number of
   %crashes was found to be associated with a power of around 1.02-1.04 relative increase
   %in the number of new users for the android app, and around 1.6 for the iOS app. Based on the findings we
-  Crashes increased with the power of 1.02-1.0 of new user on
+  Crashes increased with the power of 1.02-1.04 of new user on
   Android and power of 1.6 on iOS. % propose a release quality measure:
   Release quality expressed as crashes per user was independent of
   other usage-related predictors, thus serving as a usage independent
-  measure of software quality. Susage also affected quality in NPM, where
+  measure of software quality. Usage also affected quality in NPM, where
   downloads were strongly associated with numbers of issues for
   almost all packages. Unlike in mobile case where exceptions per
   user decrease over time, %However, we found from the timeline analysis that for
@@ -153,11 +153,11 @@ users. Observing a software crash, generally speaking, a is
 manifestation of low quality to a user of the software. 
 Thus, it seems intuitive to measure the quality of software\footnote{in fact, we
   mean to measure one aspect of the quality of software}
-by counting the number of crashes. More crashes would be associated
+by counting the number of crashes, with more crashes being associated
 with lower quality. If, for example, we compare 
 two different softwares or two different releases of a software,
 we first calculate the number of crashes for each and then compare
-these numbers. Software with more users, however, tends
+these numbers. However, software with more users tends
 to see more crashes~\cite{dey2018modeling,hmps15,IQ08} as each user
 may exercise it differently. In
 an extreme case, a software or a release with no users will have
@@ -169,16 +169,16 @@ Ignoring this relationship, however, would misguide quality
 improvement efforts (avoid quality improvements for low usage
 releases) and/or misguided developer
 performance metrics (reward developers of low-usage products). This analogy can also be extended for software
-defects (bugs) as well, and by extension for issues raised against a
+defects (bugs), and by extension for issues raised against a
 software, since software crashes are manifestations of underlying
 defects and~\cite{caper,hmps15} observed that the number of
 discovered software defects increases with the number of users,
 although the relationship between crashes and defects is not very
 well understood~\cite{fenton1999critique}.  
 
-One possible reason for this oversight is the scarcity of reliable usage data. While the number of defects and crashes reported by users are carefully tracked by most large scale projects (\textit{e.g.} Mozilla Firefox, Ubuntu etc.), tracking the variables related to usage, \textit{e.g.} the number of users, intensity of usage etc. is almost impossible to track without a reliable monitoring system. Such a system is rarely used by open-source softwares and even many traditional software-as-a-product systems do not or can not have such capability. Moreover, even when such a dataset is available, it is almost always proprietary, so obtaining and sharing it, even for the software development teams in these proprietary projects, is difficult since the deployment is typically managed by a different team within the organization. Without such data, however, it becomes exceedingly difficult to interpret the quality of a software from the customer reported crashes/defects alone due to the interdependence of usage and crashes/defects~\cite{dey2018modeling,hmps15,IQ08}.
+One possible reason for this oversight is the scarcity of reliable usage data. While the number of defects and crashes reported by users are carefully tracked by most large scale projects (\textit{e.g.} Mozilla Firefox, Ubuntu etc.), tracking the variables related to usage, \textit{e.g.} the number of users, intensity of usage etc. is almost impossible without a reliable monitoring system. Such a system is rarely used by open-source softwares and even many traditional software-as-a-product systems do not or can not have such capability. Moreover, even when such a dataset is available, it is almost always proprietary, so obtaining and sharing it, even for the software development teams in these proprietary projects, is difficult since the deployment is typically managed by a different team within the organization. Without such data, however, it becomes exceedingly difficult to interpret the quality of a software from the customer reported crashes/defects alone due to the interdependence of usage and crashes/defects~\cite{dey2018modeling,hmps15,IQ08}.
 
-We were able to obtain the usage data for several mobile applications developed by Avaya, \textit{viz.}  Avaya Communicator for Android (currently known as Avaya Equinox\textregistered) and Avaya one-X\textregistered  Mobile SIP iOS Client. The usage data was obtained from Google Analytics. By analyzing the usage data for these applications we establish the interdependence between the number of crashes and usage, and propose a quality metric that is independent of usage, which would enable us to compare the qualities of different softwares and/or different releases of a software more accurately. 
+We were able to obtain the usage data for some mobile applications developed by Avaya, \textit{viz.}  Avaya Communicator for Android (currently known as Avaya Equinox\textregistered) and Avaya one-X\textregistered  Mobile SIP iOS Client. The usage data was obtained from Google Analytics. By analyzing the usage data for these applications, we establish the interdependence between the number of crashes and usage, and propose a quality metric that is independent of usage, which would enable us to compare the qualities of different softwares and/or different releases of a software more accurately. 
 
 We used three usage related variables: number of users, 
 usage intensity (average duration of software use per user), and usage frequency 
@@ -549,7 +549,7 @@ data to create the final model.
 The different BN structure search methods we considered are listed below:
 
 \begin{itemize}
-\item \textit{Greedy search algorithms}(HC)~\cite{nagarajan2013bayesian,bnppt}
+\item \textit{Greedy Hill-Climbing search algorithms}(HC)~\cite{nagarajan2013bayesian,bnppt}
 \item \textit{Hybrid algorithms}(Hybrid)~\cite{nagarajan2013bayesian,bnppt}
 \item \textit{Posterior maximization} using \textit{deal} package in R~\cite{bnppt,dealR} .
 \item \textit{Simulated Annealing} using \textit{catnet} package in R~\cite{catnetR,bnppt}.
