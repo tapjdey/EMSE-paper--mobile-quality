@@ -37,6 +37,16 @@
 
 
 
+
+%
+% \usepackage{mathptmx}      % use Times fonts if available on your TeX system
+%
+% insert here the call for the packages your document requires
+%\usepackage{latexsym}
+% etc.
+%
+% please place your own definitions here and don't use \def but
+% \newcommand{}{}
 \newcommand{\hypobox}[1]{
 
         \begin{center}\noindent\thicklines\setlength{\fboxsep}{8pt}\cornersize{0.2}\ovalbox{
@@ -48,16 +58,6 @@
                 \end{minipage}} 
 
         \end{center}} 
-
-%
-% \usepackage{mathptmx}      % use Times fonts if available on your TeX system
-%
-% insert here the call for the packages your document requires
-%\usepackage{latexsym}
-% etc.
-%
-% please place your own definitions here and don't use \def but
-% \newcommand{}{}
 %
 % Insert the name of "your journal" with
 \journalname{Empirical Software Engineering}
@@ -200,7 +200,8 @@ Furthermore, we proposed a quality metric of average number of
 exceptions experienced by end users (so lower means better) and
 found it to be independent of other usage metrics.  
 
-In this study, we have added the analysis of the development version of Avaya Communicator for Android and the
+In this study, we have added the analysis of the development version 
+of Avaya Communicator for Android and the
 General Availability releases of Avaya one-X\textregistered  Mobile
 SIP iOS Client. Although we collected data for several other apps,
 those were dropped due to having too few releases/ exceptions/ users
@@ -210,41 +211,15 @@ considered and it matched our result of the previous analysis as
 well. We also added a timeline showing how the perceived quality of
 the releases vary with time for different releases.   
 
-To increased external validity of these findings, we also consider
-the relationship between usage and quality measures for a rather
+To increase the external validity of these findings, we also consider
+the relationship between downloads, a measure of usage, and number of 
+issues, a measure similar to the number of crashes or bugs, for a rather
 different scenario of NPM packages. Node Package Manager (NPM) is
 the package manager for node.js, an open-source, cross-platform
 JavaScript run-time environment.  Since we do not have the number of
 crashes for these packages, we looked at the number of issues
-reported for these packages instead.
-% the following should probably not be in the intro: too much detail
-NPM tracks the number of
-downloads of the packages, and while the number of downloads counted
-by NPM is essentially a mix of downloads by users, bots, and mirror
-servers, as explained in~\cite{npmdl}, it is the closest measure of
-usage we could find for open-source projects. We only looked at the
-NPM packages that have more than 10,000 downloads a month. According to~\cite{npmdl}, automated downloads are expected to be
-around 50 per day, or 1500 per month. Packages with over 10K
-downloads should, therefore, not be noticeably impacted by such
-non-user downloads. We collected the issues
-associated with the projects from their individual GitHub
-repositories. We found 4430 projects which had more than 10,000
-monthly downloads since January 2018 and also had public GitHub
-repositories with nonzero number of issues.  We collected the number
-of downloads and the total number of issues for all these packages
-from 2015-03-01 to 2018-08-31. However, we did not conduct a release
-by release comparison for these packages, since the release
-durations vary by a lot for most packages. Since the recorded number
-of downloads is a mix of downloads by human and non-human users, a
-release by release comparison would not give a reliable picture of
-the effect of actual usage by human users on the number of
-issues. However, the number of downloads by bots are relatively
-stable and vary only with time, so controlling for the date would
-eliminate the spurious effects of downloads by bots. So, we decided
-to focus on the entire packages instead of releases of the packages,
-and measured the effect daily downloads have on number of issues of
-that package on that day after controlling for the calender date.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+reported for these packages instead. We chose to look at 4430 NPM packages
+that had more than 10,000 monthly downloads and a GitHub page with issues enabled.
 From the analysis of NPM packages we found that for only 36 out of
 4430 packages (0.8\%) the number of daily downloads is not a
 significant predictor (p-value $> 0.5$ ) of the number of issues on
@@ -350,7 +325,30 @@ the Spark codebase. A more in-depth description of the development
 process is provided in~\cite{amhp14}.
 
 \subsection{NPM Packages}
-Node Package Manager or NPM is one of the most active and dynamic software ecosystems at present. It currently hosts more than 800,000 packages, and have more than doubled in size in past couple of years (in January 2017, NPM reportedly hosted around 350,000 packages~\cite{npmpkg}). The popularity of NPM packages have, accordingly, skyrocketed as well. According to~\cite{npmpop}, ``JavaScript is getting more popular all the time, and NPM is being adopted by an ever greater percentage of the JavaScript community." About 75\% of all JavaScript developers used NPM, with about 10 million users, in January 2018, according to~\cite{npmpop}. Therefore, NPM is an excellent candidate for this study. Moreover, since they track the number of downloads of all packages in the ecosystem, it can be used as a  measure of usage. Although the number of recorded downloads is a mix of downloads by actual users and bots, mirror servers etc.~\cite{npmdl} it is still a far better measure than, \emph{e.g.} number of stars of a GitHub repository which was used in studies like~\cite{borges2016understanding} as a measure of popularity, which is little different from usage as we measure it.
+Node Package Manager or NPM is one of the most active and dynamic software ecosystems at present. It currently hosts more than 800,000 packages, and have more than doubled in size in past couple of years (in January 2017, NPM reportedly hosted around 350,000 packages~\cite{npmpkg}). The popularity of NPM packages have, accordingly, skyrocketed as well. According to~\cite{npmpop}, ``JavaScript is getting more popular all the time, and NPM is being adopted by an ever greater percentage of the JavaScript community." About 75\% of all JavaScript developers used NPM, with about 10 million users, in January 2018, according to~\cite{npmpop}. Therefore, NPM is an excellent candidate for this study. Moreover, since they track the number of downloads of all packages in the ecosystem, which, in spite of essentially being a mix of downloads by users, bots, and mirror servers, as explained in~\cite{npmdl}, is the closest measure of
+usage we could find for open-source projects. We only looked at the
+NPM packages that have more than 10,000 downloads a month. According to~\cite{npmdl}, automated downloads are expected to be
+around 50 per day, or 1500 per month. Packages with over 10K
+downloads should, therefore, not be noticeably impacted by 
+ downloads by automated sources. We collected the issues
+associated with the projects from their individual GitHub
+repositories. We found 4430 projects which had more than 10,000
+monthly downloads since January 2018 and also had public GitHub
+repositories with nonzero number of issues.  We collected the number
+of downloads and the total number of issues for all these packages
+from 2015-03-01 to 2018-08-31. However, we did not conduct a release
+by release comparison for these packages, since the release
+durations vary by a lot for most packages. Since the recorded number
+of downloads is a mix of downloads by human and non-human users, a
+release by release comparison would not give a reliable picture of
+the effect of actual usage by human users on the number of
+issues. However, the number of downloads by bots are relatively
+stable and vary only with time~\cite{npmdl}, so controlling for the date would
+eliminate the spurious effects of downloads by bots. So, we decided
+to focus on the entire packages instead of releases of the packages,
+and measured the effect daily downloads have on number of issues of
+that package on that day after controlling for the calender date.
+Although the number of recorded downloads is a mix of downloads by actual users and bots, mirror servers etc.~\cite{npmdl} it is still a far better measure than, \emph{e.g.} number of stars of a GitHub repository which was used in studies like~\cite{borges2016understanding} as a measure of popularity, which is little different from usage as we measure it.
 
 
 
@@ -1070,11 +1068,21 @@ We found that out of the 4430 packages, only for 36 packages the p-value of the 
 
 The $R^2$ values of the fitted models varied between 0 and 0.8637 (median: 0.4982, standard deviation: 0.0618) before adjusting for the calender date , and between 0.019 and 0.999 (median: 0.9195, standard deviation: 0.0618) after  adjusting for the calender date. So, we can say that the number of daily downloads is a significant and important predictor for the number of issues encountered by the users for most of the packages. 
 
-Since we just established that the number of issues of an NPM package depends on the number of daily downloads, a similar quality metric of number of issues per download should be applicable in this situation as well. 
+Since we just established that the number of issues of an NPM package depends on the number of daily downloads, a similar quality metric of number of issues per download should be applicable in this situation as well.  
 
-By calculating the quality metric in this way, we found that for different packages, it varied between 1.789 and 3531 (median: 12.755, standard deviation: 344.54). Further inspection showed that the value of the quality variable increases with time for almost half of the packages (2030 out of 4430 packages, 45.8\%), unlike what we observed for the mobile applications, where for almost all of the releases of the three softwares, the value of the quality variable decreased with time. 
+To check the quality of different packages, we looked at the minimum and median value of the quality metric for the 4430 packages. We didn't consider the absolute maximum value, since some packages had zero downloads for a few days, driving the value of the quality metric to infinity. So, we used the $90^{th}$ quantile value as a proxy for the maximum value. We looked at the packages for which the value of the quality metric was more than 1. The threshold was chosen because we were looking at the packages of really high values of the quality metric, and thus were of poor quality. We found that for 340 packages the $90^{th}$ quantile value of the quality metric was more than 1. The number was 100 and 3 when we looked at the median and minimum values respectively. The three packages for which the total number of issues over the number of daily downloads was more than 1 were '@ngrx/store', '@protobufjs/fetch', and '@protobufjs/inquire'. Overall, we found that the packages for which the value of the quality metric was more than 1 were mostly packages from a big project that were relatively less downloaded, \emph{e.g.} `babel-plugin-transform-es2015-block-scoped-functions' from babel project, `react-scripts' from facebook-react project etc. There were a few other packages that had very few downloads during most of its life-cycle since 2015, but had an increase in popularity later on, and thus were selected in our list of packages. However, since they had very few downloads for a long time, the median or maximum value of the quality metric was more than 1 (\emph{e.g.} `bubleify'). 
+For illustration, in Figure~\ref{fig:qNPM} we are showing the histogram of the median value of the quality metric for the 4430 NPM packages, which gives some idea about the overall quality distribution of the packages in the NPM ecosystem. We can see that around 75\% of the packages in NPM have a median value of the quality metric less than 0.01, which mean, overall, for around 75\% of the NPM packages, less than 1 in 100 regular users ever (since we are looking at the total number of issues) file an issue.
 
-Here we show the timelines of the quality variable we defined (\emph{i.e.} in this case, number of issues per download) for a few selected well-known NPM packages for illustration. We see that ``angular''(Fighure~\ref{fig:tNa}) and ``eslint''(Fighure~\ref{fig:tNe}) have a trend similar to what we saw for the mobile apps, with the value of the quality variable decreasing with time, but ``babel''(Fighure~\ref{fig:tNb}) is showing an increase in the value, while for ``ember-cli'', the trend is overall constant over time.
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.75\linewidth]{qNPM}
+\caption{Histogram of Median Values of Quality of NPM packages}
+\label{fig:qNPM}
+\end{figure}
+
+Further inspection showed that the value of the quality variable increases with time for almost half of the packages (2030 out of 4430 packages, 45.8\%), unlike what we observed for the mobile applications, where for almost all of the releases of the three softwares, the value of the quality variable decreased with time.
+
+Here we also show the timelines of the quality variable we defined (\emph{i.e.} in this case, number of issues per download) for a few selected well-known NPM packages for illustration. We see that ``angular''(Fighure~\ref{fig:tNa}) and ``eslint''(Fighure~\ref{fig:tNe}) have a trend similar to what we saw for the mobile apps, with the value of the quality variable decreasing with time, but ``babel''(Fighure~\ref{fig:tNb}) is showing an increase in the value, while for ``ember-cli'', the trend is overall constant over time.
 
 \begin{figure}[!t]
 \centering
