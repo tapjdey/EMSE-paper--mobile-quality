@@ -168,7 +168,8 @@ do note that~\cite{fenton2008using,fenton1999critique}).
 Ignoring this relationship, however, would misguide quality
 improvement efforts (avoid quality improvements for low usage
 releases) and/or misguided developer
-performance metrics (reward developers of low-usage products). This analogy can also be extended for software
+performance metrics (reward developers of low-usage products). 
+This analogy can also be extended for software
 defects (bugs), and by extension for issues raised against a
 software, since software crashes are manifestations of underlying
 defects and~\cite{caper,hmps15} observed that the number of
@@ -287,8 +288,7 @@ The NPM ecosystem is one of the most active and dynamic JavaScript ecosystems an
 
 
 The advancements proposed in this paper over the published work are focused 
-on two primary areas: (1) study of the relationship between software faults and usage 
-using \textbf{post-release} data in mobile application context, and (2) proposing a usage independent exception-based software quality metric based on our models.
+on two primary areas: (1) study of the relationship between software faults (issues for NPM packages) and usage using \textbf{post-release} data in the context of two proprietary mobile applications and 4430 popular NPM packages, and (2) proposing a usage independent exception-based software quality metric based on our models.
 
 
 
@@ -298,14 +298,14 @@ For this study, we looked into two different types of software, which are vastly
 
 \subsection{The Mobile Applications developed by Avaya}
 One of the software chosen for this study was Avaya Communicator for
-Android and iOS (currently known as Avaya Equinox\textregistered ). It
+Android (currently known as Avaya Equinox\textregistered ). It
 integrates the mobile devices of the users with their office Avaya
 Aura\textregistered communications environment and delivers mobile
 voice and video VoIP calling, cellular call integration, rich
 conferencing, instant messaging, presence, visual voicemail,
-corporate directory access and enterprise call logs\footnote{\url{https://support.avaya.com/products/P1574/avaya-equinox-for-android}\\   \url{https://support.avaya.com/products/P1597/avaya-equinox-for-ios/All}}.
+corporate directory access and enterprise call logs\footnote{\url{https://support.avaya.com/products/P1574/avaya-equinox-for-android}}.
 
-Another software we studies was the Avaya one-X\textregistered Mobile  SIP  for  iOS, which provides mobile communications for the iPhone, iPod touch, and iPad through a wireless-enabled SIP Avaya Aura\textregistered environment combining enterprise features with the convenience of a mobile endpoint for users on the go. The Avaya one-X Mobile\textregistered SIP for iOS appears as an end point in the Aura\textregistered environment\footnote{\url{https://support.avaya.com/products/P0949/avaya-onex-mobile-sip-for-ios}}.
+Another software we studied was the Avaya one-X\textregistered Mobile  SIP for  iOS, which provides mobile communications for the iPhone, iPod touch, and iPad through a wireless-enabled SIP Avaya Aura\textregistered environment combining enterprise features with the convenience of a mobile endpoint for users on the go. The Avaya one-X Mobile\textregistered SIP for iOS appears as an end point in the Aura\textregistered environment\footnote{\url{https://support.avaya.com/products/P0949/avaya-onex-mobile-sip-for-ios}}.
 
 Avaya is developing large, complex, real-time software systems that
 are embedded and standalone products. Development and testing are
@@ -369,7 +369,7 @@ applications investigated in this study.
 We collected data for a number of mobile applications developed by Avaya from Google Analytics, but some of the datasets turned out to be unusable for this study, for reasons ranging from very low volume of collected data (\textit{e.g.} Avaya Communicator for Android - Experimental Releases) to zero recorded exceptions making an analysis impractical (\textit{e.g.} Avaya One-X\textregistered   ScsCommander ). The following datasets were found usable:
 \begin{itemize}
     \item Avaya Communicator for Android - General Availability and Development versions.
-    \item Avaya one-X\textregistered Mobile  SIP  for  iOS - General Availability versions.
+    \item Avaya one-X\textregistered Mobile  SIP for  iOS - General Availability versions.
 \end{itemize}
 
 The data was collected between December 2013 and May 2016, although the exact time varies across the applications. Although we are primarily focused on the General Availability (GA) versions, since only these versions are available for end-users, we also decided to look into the development version for Avaya Communicator for Android, since we have detailed data available for these versions and we wanted to see if it shows a different characteristics from the GA versions.  
@@ -621,8 +621,8 @@ the goal is to create an explanatory model from non-informative prior models
 BIC score is used for discrete data while the Gaussian 
 equivalent of BIC (bic-g) score is used for continuous data.
 
-The results, structure and parameters resulting from a structure
-search algorithm are often noisy, meaning that
+The results, \emph{i.e.} the structure and the parameters resulting from a structure
+search algorithm, are often noisy, meaning that
 different settings induce slightly different networks. To mitigate
 this effect we use non-parametric bootstrap model averaging method
 described in~\cite{friedman1999data}, which provides confidence
@@ -722,9 +722,8 @@ Hybrid- iamb -D-H & 0.000 & 0.002\\\hline
 The result of the simulation study is shown in Table~\ref{t:sim_result}, which shows 
 the fraction of times exact structures and off-by-one structures\footnote{one extra 
 / missing / reversed edge} were generated by each method in the simulation. The result varies 
-with the chosen threshold, but in Table~\ref{t:sim_result}, we show the overall performance of
-different methods and we only show 
-the methods which generated an exact or off-by-one structure at least once in the simulation.
+with the chosen threshold, so in Table~\ref{t:sim_result}, we show the overall performance of the
+different methods  which generated an exact or off-by-one structure at least once in the simulation.
 For the hybrid search methods, we list mention the restrict option that was used, and the 
 `-D' suffix indicates a discretization method was used to discretize the data prior to applying 
 a structure search method. `-D-H' indicates Hartemink discretization method and `-D-F' indicates 
@@ -761,7 +760,8 @@ HC & 1.00 & 0.19 & 0.47\\ \hline
 \end{table}
 
 In Table~\ref{t:sim_threshold}, we show the fraction of times exact and 
-off-by-one models were generated by HC and MAP methods for different thresholds. 
+off-by-one models were generated by HC and MAP methods, which performed 
+the best among the methods considered,  for different thresholds. 
 It can be seen that using a moderately high threshold between 0.75 and 0.9 gives
 good results for both HC and MAP, while higher thresholds for HC and lower thresholds for MAP
 give worse results. Using the optimal threshold creates models that have more than one wrong 
@@ -785,7 +785,7 @@ predictive capabilities of our models we used RF, which is known as one of the b
 
 \subsection{Linear Regression Model}
 We first used a linear regression model to discover the significant variables affecting the number of exceptions. The  output  of the fitted model is shown in Table~\ref{t:LR1}.The model resulted in a decent fit for the GA releases of Avaya Communicator for Android, given the sample size of 173, with adjusted $R^2$ of 0.481 (which is higher than  0.435, the adjusted $R^2$  reported with our previous approach~\cite{dey2018modeling}), and the variable ``New.Users'' was the most significant predictor while ``Release.Date'', ``Usage Intensity'', and ``Usage Frequency'' were also statistically significant. For the development releases of the same, only ``New.Users'' was significant, and it resulted in a good fit, with adjusted $R^2$ of 0.781.
-Finally, for the GA releases of Avaya mobile SIP client for iOS, the value of $R^2$ was 0.874, and ``New.Users'', ``Release.Date'', and ``Release.Duration'' were the significant variables.
+Finally, for the GA releases of Avaya mobile SIP for iOS, the value of $R^2$ was 0.874, and ``New.Users'', ``Release.Date'', and ``Release.Duration'' were the significant variables.
 
 
 \begin{table}[ht]
@@ -794,7 +794,7 @@ Finally, for the GA releases of Avaya mobile SIP client for iOS, the value of $R
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{lrrr|rrr|rrr}
 \hline
-& \multicolumn{3}{c}{GA releases of Android} & \multicolumn{3}{c}{Dev releases of Android} & \multicolumn{3}{c}{Mobile SIP client for iOS}\\
+& \multicolumn{3}{c}{GA releases of Android} & \multicolumn{3}{c}{Dev releases of Android} & \multicolumn{3}{c}{Mobile SIP for iOS}\\
   \hline
  & Estimate & Std. Error  & p-value  & Estimate & Std. Error  & p-value  & Estimate & Std. Error  & p-value \\ 
   \hline
@@ -819,7 +819,7 @@ tailed distribution, but the distributions of the other variables
 were much closer to normal distribution.
 
 According to the result of the simulation study, we decided to use bootstrapped hill-climbing search and MAP Bayesian model averaging methods for constructing the Final BN models for our datasets and considered the model that resulted from both the methods. 
-The resultant BN model for the GA releases of Avaya Communicator for Android is shown in Figure~\ref{fig:finalAGA}.  Figure~\ref{fig:finalAD} shows the final BN Model for Development releases of Avaya Communicator for Android and Figure~\ref{fig:finalI} shows the final BN Model for GA releases of Avaya mobile SIP client for iOS.
+The resultant BN model for the GA releases of Avaya Communicator for Android is shown in Figure~\ref{fig:finalAGA}.  Figure~\ref{fig:finalAD} shows the final BN Model for Development releases of Avaya Communicator for Android and Figure~\ref{fig:finalI} shows the final BN Model for GA releases of Avaya mobile SIP for iOS.
 
 Every bootstrap run was performed over 500 bootstrap samples, and a
 hill-climbing search  with 100 random restarts was applied on each sample 
@@ -843,7 +843,7 @@ obtained by averaging 50,000 candidate networks. We used a Threshold of 0.85, as
 \begin{figure}[!t]
 \centering
 \includegraphics[width=0.7\linewidth]{i}%
-\caption{Final BN Model for GA releases of Avaya mobile SIP client for iOS (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link) }
+\caption{Final BN Model for GA releases of Avaya mobile SIP for iOS (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link) }
 \label{fig:finalI}
 \end{figure}
 
@@ -909,7 +909,7 @@ Links having a negative coefficient indicate an inverse relationship between the
 and the child node.
 The performance of explanatory models is evaluated by the fraction
 of deviance explained by the model. Our model explains $45.5\%$ and $34.7\%$ of the
-variation in ``Exceptions" (adjusted $R^2$ value of the model) for GA and development releases for Avaya Communicator for Android respectively and $20\%$ for GA releases of Avaya mobile SIP client for iOS. 
+variation in ``Exceptions" (adjusted $R^2$ value of the model) for GA and development releases for Avaya Communicator for Android respectively and $20\%$ for GA releases of Avaya mobile SIP for iOS. 
 
 
 \subsection{Random Forest Model}
@@ -918,7 +918,7 @@ As a verification step to identify the important variables affecting the number 
 For the development releases of Avaya Communicator for Android, the variable importance plot is shown in Figure~\ref{fig:rfAD}. ``New.Users'' is again the most important variable, followed by ``Release.Duration''. 
 For 3 out of the 10 folds, the $R^2$ value was negative, which basically means the fitted value had a different trend than the data~\cite{negRsq}. It varied between -3.15 and 0.89 (median: 0.06, mean: -0.22, standard deviation: 1.19)
 
-For the GA releases of Avaya mobile SIP client for iOS, the random forest model resulted in very poor prediction performance, because the number of exceptions had little variation in the test set. However, the 
+For the GA releases of Avaya mobile SIP for iOS, the random forest model resulted in very poor prediction performance, because the number of exceptions had little variation in the test set. However, the 
 variable importance plot still shows the number of new users is the most important variable, as can be seen from Figure~\ref{fig:rfI}.
 
 \begin{figure}[!t]
@@ -938,7 +938,7 @@ variable importance plot still shows the number of new users is the most importa
 \begin{figure}[!t]
 \centering
 \includegraphics[width=0.4\linewidth]{rfI}%
-\caption{Variable Importance Plot of RF model for ``Exceptions" for GA releases of Avaya mobile SIP client for iOS}
+\caption{Variable Importance Plot of RF model for ``Exceptions" for GA releases of Avaya mobile SIP for iOS}
 \label{fig:rfI}
 \end{figure}
 
@@ -967,7 +967,7 @@ exceptions experienced by each user should, therefore, be independent of usage a
 In this section we test the above evidence-based hypothesis and provide the result of an analysis with the \textbf{number of exceptions per user} as a response variable (``Quality'') representing software quality. 
 This is actually a measure for faultiness, so a lower value of ``Quality" indicates the actual quality of the software perceived by end users is better.
 
-The value of the ``Quality'' variable (not log transformed) was seen to be varying between 0 and 10.85 (mean: 0.45, median: 0, standard deviation: 1.48) for the GA release data of Avaya Communicator for Android, between 0 and 22.83 (mean: 1.12, median: 0, standard deviation: 4.55) for development versions of the same, and for the GA releases of Avaya mobile SIP client for iOS it varied between 0 and 0.5 (mean: 0.0488, standard deviation: 0.15) . %%%%%
+The value of the ``Quality'' variable (not log transformed) was seen to be varying between 0 and 10.85 (mean: 0.45, median: 0, standard deviation: 1.48) for the GA release data of Avaya Communicator for Android, between 0 and 22.83 (mean: 1.12, median: 0, standard deviation: 4.55) for development versions of the same, and for the GA releases of Avaya mobile SIP for iOS it varied between 0 and 0.5 (mean: 0.0488, standard deviation: 0.15) . %%%%%
 
 Similar to the previous analysis, we applied Linear Regression, Bayesian Network search, and 
 Random Forest modeling approaches on the dataset containing this quality measure and the remaining variables, all of which were log-transformed. 
@@ -979,7 +979,7 @@ Finally, the result of 10-fold cross-validation with the RF model (Variable Impo
 
 For the development versions of Avaya Communicator for Android, the ``Quality'' variable turns out be insignificant in both the LR (Table~\ref{t:lr2}) and the BN (Figure~\ref{fig:bn2AD}) models. The RF model gives a really bad fit in the 10-fold cross-validation as well, with $R^2$ values ranging from negative infinity to 0.64 (median: -5.74), indicating the predictors are very poor. Still, the two usage related variables have the lowest importance in the variable importance plot as seen in Figure~\ref{fig:rf2AD}.
 
-Finally, for the GA releases of Avaya mobile SIP client for iOS, the LR model shows that release date and release duration have effect on the ``Quality'' variable (although ), but the two other usage variables have no effect (Table~\ref{t:lr2}) and the BN (Figure~\ref{fig:bn2I}) models. The RF model again gives a really bad fit in the 10-fold cross-validation, with $R^2$ values ranging from negative infinity to -36.43, indicating the predictors are very poor. Still, the two usage related variables have the lowest importance in the variable importance plot as seen in Figure~\ref{fig:rf2I}.
+Finally, for the GA releases of Avaya mobile SIP for iOS, the LR model shows that release date and release duration have effect on the ``Quality'' variable (although ), but the two other usage variables have no effect (Table~\ref{t:lr2}) and the BN (Figure~\ref{fig:bn2I}) models. The RF model again gives a really bad fit in the 10-fold cross-validation, with $R^2$ values ranging from negative infinity to -36.43, indicating the predictors are very poor. Still, the two usage related variables have the lowest importance in the variable importance plot as seen in Figure~\ref{fig:rf2I}.
 
 \begin{table}[ht]
 \vspace{-10pt}
@@ -988,7 +988,7 @@ Finally, for the GA releases of Avaya mobile SIP client for iOS, the LR model sh
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{lrrr|rrr|rrr}
 \hline
-& \multicolumn{3}{c}{GA releases of Android} & \multicolumn{3}{c}{Dev releases of Android} & \multicolumn{3}{c}{Mobile SIP client for iOS}\\
+& \multicolumn{3}{c}{GA releases of Android} & \multicolumn{3}{c}{Dev releases of Android} & \multicolumn{3}{c}{Mobile SIP for iOS}\\
   \hline
  & Estimate & Std. Error  & p-value  & Estimate & Std. Error  & p-value  & Estimate & Std. Error  & p-value \\ 
   \hline
@@ -1020,7 +1020,7 @@ Finally, for the GA releases of Avaya mobile SIP client for iOS, the LR model sh
 \begin{figure}[!t]
 \centering
 \includegraphics[width=0.6\linewidth]{qI}%
-\caption{Bayesian Network  Model for ``Quality" - GA releases of Avaya mobile SIP client for iOS (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link)}
+\caption{Bayesian Network  Model for ``Quality" - GA releases of Avaya mobile SIP for iOS (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link)}
 \label{fig:bn2I}
 \end{figure}
 
@@ -1042,7 +1042,7 @@ Finally, for the GA releases of Avaya mobile SIP client for iOS, the LR model sh
 \begin{figure}[!t]
 \centering
 \includegraphics[width=0.4\linewidth]{rfqI}
-\caption{Variable Importance plot from the Random Forest  Model for Quality Variable - GA releases of Avaya mobile SIP client for iOS}
+\caption{Variable Importance plot from the Random Forest  Model for Quality Variable - GA releases of Avaya mobile SIP for iOS}
 \label{fig:rf2I}
 \end{figure}
 
