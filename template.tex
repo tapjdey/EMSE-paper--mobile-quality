@@ -674,7 +674,7 @@ with commonly used supervised methods (\textit{e.g.} Chi-square, or
 MDLP discretization algorithms) is that they optimize
 discretization to improve explanatory power for 
 a single response variable. This is not suitable for a 
-PGM structure search, because we do
+BN structure search, because we do
 not know  which variables will be responses (have arrows
 pointing to them) and which will be independent (have no incoming
 arrows) {\em a-priori}. While some research on multidimensional
@@ -694,7 +694,8 @@ We performed the simulation study by first creating
 a random BN (see Figure~\ref{fig:theory}) with 
 six nodes, since we also have six variables in our final list (Table~\ref{t:finalvarss}).
 For demonstration purposes  we use the same variable names. 
-We fitted this graph with our data (log-transformed and scaled) to generate values for the coefficients 
+We fitted this graph with our data on GA releases of Avaya communicator for Android
+ (log-transformed and scaled) to generate values for the coefficients 
 for each edge. This model was used in our simulation study going forward.
 We created 1000 different datasets from the BN structure in Figure~\ref{fig:theory},
 and applied the different structure search algorithms 
@@ -711,7 +712,7 @@ Hartemink\footnote{Hartemink's pairwise mutual information
 method\cite{hartemink2001principled}.} discretization methods 
 in the \textit{bnlearn} package.
 
-Except for the \textit{Posterior maximization} using \textit{deal} package, 
+Except for the \textit{Posterior maximization} using \textit{deal} package, which can't be bootstrapped, 
 all other results were bootstrapped, so we tested different thresholds in our 
 simulation study as well. Finally, for the the Hybrid search algorithm, in which
 conditional independence tests are performed to restrict
@@ -851,7 +852,7 @@ tailed distribution, but the distributions of the other variables
 were much closer to normal distribution.
 
 According to the result of the simulation study, we decided to use bootstrapped hill-climbing search and MAP Bayesian model averaging methods for constructing the Final BN models for our datasets and considered the model that resulted from both the methods. 
-The resultant BN model for the GA releases of Avaya Communicator for Android is shown in Figure~\ref{fig:finalAGA}.  Figure~\ref{fig:finalAD} shows the final BN Model for Development releases of Avaya Communicator for Android and Figure~\ref{fig:finalI} shows the final BN Model for GA releases of Avaya mobile SIP for iOS.
+The resultant BN model for the GA releases of Avaya Communicator for Android is shown in Figure~\ref{fig:finalAGA}, which shows ``New.Users'' and ``Release.Date'' are parent nodes of ``Exceptions''.  Figure~\ref{fig:finalAD} shows the final BN Model for Development releases of Avaya Communicator for Android, in which only ``New.Users'' is the parent of ``Exceptions'', and Figure~\ref{fig:finalI} shows the final BN Model for GA releases of Avaya mobile SIP for iOS, where once again ``New.Users'' and ``Release.Date'' are parent nodes of ``Exceptions''.
 
 Every bootstrap run was performed over 500 bootstrap samples, and a
 hill-climbing search  with 100 random restarts was applied on each sample 
@@ -949,7 +950,7 @@ The performance of explanatory models is evaluated by the fraction
 of deviance explained by the model. Our model explains $45.5\%$ and $34.7\%$ of the
 variation in ``Exceptions" (adjusted $R^2$ value of the model) for GA and development releases for Avaya Communicator for Android respectively and $20\%$ for GA releases of Avaya mobile SIP for iOS. 
 
-
+\vspace{-10pt}
 \subsection{Random Forest Model}
 As a verification step to identify the important variables affecting the number of exceptions, we used a Random Forest model to fit the data, with ``Exceptions'' as the response variable. The variable importance plot for the GA release data of Avaya Communicator for Android, as shown in Figure~\ref{fig:rfAGA}, indicates that ``Release.Date" and ``New.Users'' are the two most important variables. We ran a 10-fold cross-validation exercise with ``Exceptions'' as the response variable, the resultant $R^2$ varied between 0.1176 and 0.6455 (mean: 0.4557, standard deviation: 0.1719). The high standard deviation is likely caused by our relatively small sample size of 173. This result reinforces the result we got from earlier analyses.
 
@@ -995,7 +996,7 @@ defects, and typically the number of
 exceptions is larger than the number of defects, because one defect could cause crashes for multiple users (or multiple crashes for a single user). The study published in~\cite{IQ08} was done for a system with many 
 more users (around 4,000 to 16,000),however, they reported that for a two-fold increase in the 
 number of users the number of Modification Requests (MR tickets) increase around $1.25$ times, 
-which is less than what would have been predicted by our model ($1.78$). Although we
+which is more than what would have been predicted by our model ($1.02 - 1.04$) for Android apps, but less than what we have ($1.6$) for the iOS app. Although we
 were unable to do a direct comparison to another mobile application, these findings add more context to our result, and indicates the necessity of further studies that publish their datasets to understand the usage-fault relationship in a wider range of applications.
 
 \vspace{-10pt}
@@ -1018,9 +1019,9 @@ The LR model of GA releases of Avaya Communicator for Android (Table~\ref{t:lr2}
 The BN model(Figure~\ref{fig:bn2AGA}), obtained with a threshold of 0.85 from a bootstrapped Hill-Climbing structure search model, indicates the ``Quality'' variable depends only on  the ``Release.Date'' variable.
 Finally, the result of 10-fold cross-validation with the RF model (Variable Importance plot in Figure~\ref{fig:rf2AGA}) indicates that the ``Release.Date'' variable is much more important compared to others, and the two usage related variables are of much lower importance. The $R^2$ value for the LR model was 0.1455 in this case, and for the 10-fold cross-validation (RF model) it varies between -3.368 and 0.643 (mean: -0.292, standard deviation: 1.371). The implication of negative $R^2$, as mentioned before is that the fitted model shows a very different trend~\cite{negRsq}.
 
-For the development versions of Avaya Communicator for Android, the ``Quality'' variable turns out be insignificant in both the LR (Table~\ref{t:lr2}) and the BN (Figure~\ref{fig:bn2AD}) models. The RF model gives a really bad fit in the 10-fold cross-validation as well, with $R^2$ values ranging from negative infinity to 0.64 (median: -5.74), indicating the predictors are very poor. Still, the two usage related variables have the lowest importance in the variable importance plot as seen in Figure~\ref{fig:rf2AD}.
+For the development versions of Avaya Communicator for Android, all the predictor variables turned out be insignificant in both the LR (Table~\ref{t:lr2}) and the BN (Figure~\ref{fig:bn2AD}) models. The RF model gives a really bad fit in the 10-fold cross-validation as well, with $R^2$ values ranging from negative infinity to 0.64 (median: -5.74), indicating the predictors are very poor. Still, the two usage related variables have the lowest importance in the variable importance plot as seen in Figure~\ref{fig:rf2AD}.
 
-Finally, for the GA releases of Avaya mobile SIP for iOS, the LR model shows that release date and release duration have effect on the ``Quality'' variable (although ), but the two other usage variables have no effect (Table~\ref{t:lr2}) and the BN (Figure~\ref{fig:bn2I}) models. The RF model again gives a really bad fit in the 10-fold cross-validation, with $R^2$ values ranging from negative infinity to -36.43, indicating the predictors are very poor. Still, the two usage related variables have the lowest importance in the variable importance plot as seen in Figure~\ref{fig:rf2I}.
+Finally, for the GA releases of Avaya mobile SIP for iOS, the LR model (Table~\ref{t:lr2}) as well as the BN model (Figure~\ref{fig:bn2I})  shows that release date and release duration have effect on the ``Quality'' variable, but the two other usage variables have no effect. The RF model again gives a really bad fit in the 10-fold cross-validation, with $R^2$ values ranging from negative infinity to -36.43, indicating the predictors are very poor. Still, the two usage related variables have the lowest importance in the variable importance plot as seen in Figure~\ref{fig:rf2I}.
 
 \begin{table}[ht]
 \vspace{-10pt}
@@ -1111,7 +1112,7 @@ We wanted to see how the perceived quality of the releases of the different mobi
 
 \section{Analysis of the NPM Data: Results}\label{s:npm}
 
-As mentioned before, for the analysis of the NPM data we focused on the timeline of the entire packages, instead of the individual releases of a package to reduce the effect of the downloads by bots and other automated sources. Since we had only three variables in our dataset, we decided to go for the simpler liner model. We had the total number of reported issues for the package as the response variable and observed how much the number of daily downloads, before and after controlling for the calender date, explained it. 
+As mentioned before, for the analysis of the NPM data we focused on the timeline of the entire packages, instead of the individual releases of a package to reduce the effect of the downloads by bots and other automated sources. Since we only had  three variables (no. of issues, no. of downloads, calendar date) in our dataset, we decided to go for the simpler liner model. We had the total number of reported issues for the package as the response variable and observed how much the number of daily downloads, before and after controlling for the calender date, explained it. 
 
 We found that out of the 4430 packages, only for 36 packages the p-value of the predictor variable was more than 0.05 before adjusting for the calender date, and after adjusting for the calender date, p-value was less than 0.5 (\emph{i.e.} the predictor was deemed significant) for all 4430 packages. 
 
@@ -1175,14 +1176,13 @@ Here we also show the timelines of the quality variable we defined (\emph{i.e.} 
 \section{Implication of our Findings}\label{s:implication}
 
 Our analysis makes it evident that the number of new
-users  is the most important variable in explaining various post-release variables, as seen in all three of the mobile applications as well as for the NPM packages. 
+users  is the most important variable in explaining various post-release variables, as seen in all three of the mobile applications as well as for the NPM packages, where the number of downloads was found to be an important predictor for the number of issues. 
 The analysis also indicates that more new users for a release indicate 
 more exceptions being found for the software
 and, for the GA releases of both the apps analyzed, longer activity for the release (the duration
 of a release measures how long a release is actively used by users,
 not the time between two releases, since the releases overlap).  This
-suggests that users  may 
- be reluctant to upgrade (or are encouraged to stay) on better-quality releases.
+suggests that users  may be reluctant to upgrade (or are encouraged to stay) on better-quality releases.
  Our findings are in agreement with findings
 of~\cite{IQ08,hmps15,mockus2005predictors} that consider 
 post-release defects for a completely different server software system.
@@ -1195,9 +1195,9 @@ users have on the number of exceptions, the number of exceptions are
 increasing with time for the Android app, whereas is decreases for the iOS app. 
 This may indicate that as the software, the OS, as well as the hardware are becoming 
 more complex with time, which is consistent with a rapid growth of
-functionality and the size of associated code base, the Android app is seeing more crashes due to the variations in the devices and the OS, whereas for iOS, since the devices as well as the OS versions are tightly controlled, the users are seeing less issues,   although we have no explicit evidence to support our speculation. 
+functionality and the size of associated code base. The Android app is seeing more crashes due to the variations in the devices and the OS, whereas for iOS, since the devices as well as the OS versions are tightly controlled, the users are seeing less issues, although we have no explicit evidence to support our speculation. 
 
-We found from the timeline that, as a general trend, most of exceptions occur very early after the release, then as the number of users increase, the perceived quality of the release improves as well.
+We found from the timeline that, as a general trend, most of exceptions occur very early after the release, then, as the number of users increase, the perceived quality of the release improves as well.
 
 
 An interesting observation from the model is the lack of any direct relationship 
@@ -1215,7 +1215,8 @@ that most of the issues happen soon after deploying the release
 and the chances of reporting a defect for a new release drops 
 very rapidly with time after installation.
 
-We observed that for the NPM packages we analyzed, the number of downloads is a significant predictor for the number of issues for  most of the NPM packages, so a similar quality measure was used for this case as well. 
+From the analysis of the NPM packages we observed that the number of downloads is a significant predictor for the number of issues for  most of the NPM packages, and when controlled for the calendar date, which compensated for the variations in the downloads by automated sources, it was a significant predictor for all the NPM packages. So, a similar quality measure was used for this case as well. 
+We found by looking into this metric that, overall, for around 75\% of the NPM packages, less than 1 in 100 regular users ever (since we are looking at the total number of issues) file an issue.
 However, unlike the three mobile apps, where the value of our quality metric decreases with time for all releases, for the NPM packages the quality metric sometimes increases or remain relatively constant over time (around 45.8\% of the time). 
 
 Our data, scripts, and more detailed results are available in our GitHub repository: \url{https://github.com/tapjdey/release\_qual\_model}.
@@ -1225,7 +1226,7 @@ We found that the exceptions are a result of more new users and the extent
 of usage does not appear to have a direct effect on the number of new users.
 }
  
-Overall, none of the three models indicate that ``Usage.Frequency'' or ``Usage.Intensity'' have any effect on the ``Quality'' variable. We, therefore, suggest that the exceptions per new user can be used as a software development quality metric to compare quality of different releases and to quantifying the impact of variables representing the development process of a release.
+Overall, none of the three models indicate that ``Usage.Frequency'' or ``Usage.Intensity'' have any effect on the ``Quality'' variable. We, therefore, suggest that the exceptions per new user, or a metric similar to that, can be used as a software development quality metric to compare quality of different releases and to quantifying the impact of variables representing the development process of a release.
 
 
 \section{Limitations}\label{s:limitation}
@@ -1324,7 +1325,7 @@ normalization was previously proposed in the context of post-release
 defects that also exhibited strong positive correlation with the
 number of users.  As a larger proportion of applications are mobile
 and/or delivered as a service, the amount of usage can be relatively
-easily be collected.  Consequently, not adjusting software
+easily collected.  Consequently, not adjusting software
 development measures for usage should not be considered as an
 excusable practice.
 
@@ -1335,10 +1336,7 @@ as a special Bayesian Network with the response node being
 potentially connected to each predictor node. Bayesian Networks
 allow for exploration of relationships among all variables and
 empirical determination of the relationships exhibited in a
-particular dataset.  Both models indicate that there are only two
-variables that are related to exceptions in this data: number of
-users and release date which we used as a proxy for the release
-quality. It would be preferable to have each release as a separate
+particular dataset.  For all three mobile softwares analyzed, the number of users was found to be the most significant predictor with both the models. It would be preferable to have each release as a separate
 categorical predictor, but because for simplicity we chose to use
 only one observation per release, it could not be done. If, instead,
 we considered exceptions during different periods of a release, that
@@ -1349,7 +1347,7 @@ quality (higher number meaning lower quality).
 We also established
 that it is possible to predict exceptions using Random Forest
 modeling techniques and that usage plays a key role for the accuracy
-of these predictions. As noted above, prediction is a different task
+of these predictions. However, the performance of the predictive model was not consistently good, since, as noted above, prediction is a different task
 than explanation and, even though it often yields more accurate
 results, the prediction results may be harder to explain to
 developers or managers and, therefore, harder to act upon. We
@@ -1358,6 +1356,10 @@ in defect prediction. While defects are not exceptions, usage was
 also found to affect post-release defects in a similar
 manner~\cite{caper,hmps15,mockus2005predictors}. It would, therefore, be advisable to 
 incorporate forecasts of usage into defect prediction models  to increase their accuracy.
+
+Our analysis of the NPM packages established that our approach is extendable to other domains as well. 
+The study revealed that even a less accurate measure of usage like downloads, which, for NPM packages, is a mix of downloads by human users and automated sources, is an important predictor for the number of issues reported, which again is a weakly similar measure to the number of crashes or bugs. 
+So, our theory can be applied to any situation similar to the ones we studied, even when only proxy measures for usage and crashes/ bugs are available.
 
 We hope that this work will spur more research on software engineering
 aspects in post-deployment stage because, like mobile applications, 
@@ -1374,6 +1376,8 @@ Google Analytics to monitor application usage and crashes, so the
 approach should be widely applicable. Despite that, we 
 are not aware of any prior empirical study that would leverages Google
 Analytics or similar data for software quality modeling.
+
+The result of our simulation study should also be useful for practitioners using Bayesian Network structure search techniques for choosing the best performing methods.
 
 
 Finally, much more work is needed to gather additional empirical
