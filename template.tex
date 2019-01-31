@@ -226,19 +226,30 @@ From the analysis of NPM packages we found that for only 36 out of
 significant predictor (p-value $> 0.5$ ) of the number of issues on
 that day. 
 
-In summary, we have observed a strong relationship between the number
-of exceptions (crashes) and usage by analyzing different softwares,
-and have proposed a  quality metric  that gives a more
-complete and reliable measure of quality.  We have also presented the
-detailed result of the simulation study we conducted to choose the
-best performing BN structure search algorithms, which we believe
-will of of use to practitioners willing to use BN structure search
-methods in their work. To test our approach in a different context, we have used our
-approach to study the relationship between the number of downloads
-and issues of 4430 NPM packages and found the number of downloads to be a significant
-predictor of number of issues for most (99.2\%) of them. Finally, we have presented a timeline
-showing how the perceived quality changes with time during the different releases for the mobile 
-applications and during the life of the NPM packages, and discussed the trends we found.
+In summary, the primary contributions include an observerd strong
+relationship between the number of exceptions (crashes) and usage by
+analyzing different softwares and a quality metric that gives a more
+complete and reliable measure of quality. The wider implications of
+these findings suggest the potentially serious problems in existing
+quality metris and predictions. Specifically, the organizational
+goals for a software project quality should take into account usage,
+and software defect predictors could be improved substantially if
+the population of users would be taken ito account and could be
+predicted.
+
+We have also presented the detailed result of the simulation study
+we conducted to choose the best performing BN structure search
+algorithms, which we believe will of of use to practitioners willing
+to use BN structure search methods in their work. To increase
+external validity, we investigated usage-quality relationship in a
+different context: the number of downloads and issues of 4430 NPM
+packages. We found the number of downloads to be a significant
+predictor of number of issues for most (99.2\%) of them. Finally, we
+have presented a timeline showing how the perceived quality changes
+with time during the different releases for the mobile applications
+and during the life of the NPM packages, and discussed the trends we
+found.
+
 
 The rest of the paper is organized as follows: In Section~\ref{s:relwork}, we discuss the related works and other studies that have found similar results. In Section~\ref{s:soft}, we give some details about both the commercial software and NPM packages we analyzed. Details of the data collected for the study is discussed in Section~\ref{s:data}. Section~\ref{s:datapre} lists the data preprocessing steps we followed. We discuss the simulation study we performed for choosing the best performing BN structure search method that was used in subsequent analysis in Section~\ref{s:sim}. In Section~\ref{s:explain}, we present the different modeling approaches used to explain the number of exceptions(crashes) for the commercial softwares we studied and the results of that study. A comparison of our result and already published results is presented in Section~\ref{sec:compare}. 
 The quality metric we used is discussed in Section~\ref{s:qual}. The result of the analysis of the NPM packages is presented in Section~\ref{s:npm}. We discuss the implications of our result in Section~\ref{s:implication}. Finally, we discuss the limitations of our study in Section~\ref{s:limitation} and conclude the paper in Section~\ref{s:conclusion}.  
