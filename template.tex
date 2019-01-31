@@ -124,8 +124,8 @@ Results: We found the number of new users to be
   software faults. %Furthermore, the relative increase in the number of
   %crashes was found to be associated with a power of around 1.02-1.04 relative increase
   %in the number of new users for the android app, and around 1.6 for the iOS app. Based on the findings we
-  Crashes increased with the power of 1.02-1.04 of new user on
-  Android and power of 1.6 on iOS. % propose a release quality measure:
+  Crashes increased with the power of 1.02-1.04 of new user for the 
+  Android app and power of 1.6 for the iOS app. % propose a release quality measure:
   Release quality expressed as crashes per user was independent of
   other usage-related predictors, thus serving as a usage independent
   measure of software quality. Usage also affected quality in NPM, where
@@ -151,7 +151,7 @@ engineering.  ``Software Quality'' has been defined in various ways,
 but in this paper we take a narrow focus on the manifestation of software
 defects as crashes observed from the perspective of the
 users. Observing a software crash, generally speaking, a is
-manifestation of low quality to a user of the software. 
+manifestation of low quality of the software to a user. 
 Thus, it seems intuitive to measure the quality of software\footnote{in fact, we
   mean to measure one aspect of the quality of software}
 by counting the number of crashes, with more crashes being associated
@@ -167,8 +167,8 @@ software usage volume and crashes experienced is typically not
 considered in quality measurement in industry or in empirical studies (although few studies
 do note that~\cite{fenton2008using,fenton1999critique}).
 Ignoring this relationship, however, would misguide quality
-improvement efforts (avoid quality improvements for low usage
-releases) and/or misguided developer
+improvement efforts (avoid quality improvements for releases/
+software with low usage) and/or misguided developer
 performance metrics (reward developers of low-usage products). 
 This analogy can also be extended for software
 defects (bugs), and by extension for issues raised against a
@@ -178,18 +178,17 @@ discovered software defects increases with the number of users,
 although the relationship between crashes and defects is not very
 well understood~\cite{fenton1999critique}.  
 
-One possible reason for this oversight is the scarcity of reliable usage data. While the number of defects and crashes reported by users are carefully tracked by most large scale projects (\textit{e.g.} Mozilla Firefox, Ubuntu etc.), tracking the variables related to usage, \textit{e.g.} the number of users, intensity of usage etc. is almost impossible without a reliable monitoring system. Such a system is rarely used by open-source softwares and even many traditional software-as-a-product systems do not or can not have such capability. Moreover, even when such a dataset is available, it is almost always proprietary, so obtaining and sharing it, even for the software development teams in these proprietary projects, is difficult since the deployment is typically managed by a different team within the organization. Without such data, however, it becomes exceedingly difficult to interpret the quality of a software from the customer reported crashes/defects alone due to the interdependence of usage and crashes/defects~\cite{dey2018modeling,hmps15,IQ08}.
+One possible reason for this oversight is the scarcity of reliable usage data. While the number of defects and crashes reported by users are carefully tracked by most large scale projects (\textit{e.g.} Mozilla Firefox, Ubuntu etc.), tracking the variables related to usage, \textit{e.g.} the number of users, intensity of usage etc. is almost impossible without a reliable monitoring system. Such a system is rarely used by open-source software and even many traditional software-as-a-product systems do not or can not have such capability. Moreover, even when such a dataset is available, it is almost always proprietary, so obtaining and sharing it, even for the software development teams in these proprietary projects, is difficult since the deployment is typically managed by a different team within the organization. Without such data, however, it becomes exceedingly difficult to interpret the quality of a software from the customer reported crashes/defects alone due to the interdependence of usage and crashes/defects~\cite{dey2018modeling,hmps15,IQ08}.
 
-We were able to obtain the usage data for some mobile applications developed by Avaya, \textit{viz.}  Avaya Communicator for Android (currently known as Avaya Equinox\textregistered) and Avaya one-X\textregistered  Mobile SIP iOS Client. The usage data was obtained from Google Analytics. By analyzing the usage data for these applications, we establish the interdependence between the number of crashes and usage, and propose a quality metric that is independent of usage, which would enable us to compare the qualities of different softwares and/or different releases of a software more accurately. 
-
-We used three usage related variables: number of users, 
+We were able to obtain the usage data for some mobile applications developed by Avaya, \textit{viz.}  Avaya Communicator for Android (currently known as Avaya Equinox\textregistered) and Avaya one-X\textregistered  Mobile SIP iOS Client. The usage data was obtained from Google Analytics. 
+For analyzing the usage data for these applications, we used three usage related variables: number of users, 
 usage intensity (average duration of software use per user), and usage frequency 
 (average number of times the app was used by a user), along with two variables describing attributes 
 of the particular release: release date and effective duration of the release, measured by how 
 long the release continued to have new users, and looked at how these variables affect 
 the number of exceptions \textit{i.e.} application crashes.  
 
-After the usual data cleaning and variable construction stages, we first applied a linear regression (LR) model to identify the significant predictors for the number of exceptions. Then we used a Bayesian Network (BN) model to discover the interrelationship between the variables. The BN model was generated by using structure search algorithms, and the search method was chosen based on the result of a simulation study. We have presented the detailed result of the simulation study and hope that other practitioners willing to use BN structure search methods in their work might find it useful.  Finally, we ran a random forest (RF) model to identify the importance of the variables for predicting the number of exceptions. All analyses in this study was done in R~\cite{R}. We found that the frequency and intensity of usage have little impact on the number of exceptions, but the number of users does have a significant impact. 
+After the usual data cleaning and variable construction stages, we first applied a linear regression (LR) model to identify the significant predictors for the number of exceptions. Then we used a Bayesian Network (BN) model to discover the interrelationship between the variables. The BN model was generated by using structure search algorithms, and the search method was chosen based on the result of a simulation study. We have presented the detailed result of the simulation study and hope that other practitioners willing to use BN structure search methods in their work might find it useful.  Finally, we ran a random forest (RF) model to identify the importance of the variables for predicting the number of exceptions. All analyses in this study was done in R~\cite{R}. We found that the frequency and intensity of usage have little impact on the number of exceptions, but the number of users does have a significant impact. Thus, we establish the interdependence between the number of crashes and usage, and finally propose a quality metric that is independent of usage, which would enable us to compare the qualities of different softwares and/or different releases of a software more accurately. 
 
 In our previous work~\cite{dey2018modeling}, we only analyzed the
 General Availability releases for  Avaya Communicator for
@@ -227,15 +226,15 @@ From the analysis of NPM packages we found that for only 36 out of
 significant predictor (p-value $> 0.5$ ) of the number of issues on
 that day. 
 
-In summary, the primary contributions include an observerd strong
+In summary, the primary contributions include an observed strong
 relationship between the number of exceptions (crashes) and usage by
 analyzing different softwares and a quality metric that gives a more
 complete and reliable measure of quality. The wider implications of
 these findings suggest the potentially serious problems in existing
-quality metris and predictions. Specifically, the organizational
+quality metrics and predictions. Specifically, the organizational
 goals for a software project quality should take into account usage,
 and software defect predictors could be improved substantially if
-the population of users would be taken ito account and could be
+the population of users would be taken into account and could be
 predicted.
 
 We have also presented the detailed result of the simulation study
@@ -252,7 +251,7 @@ and during the life of the NPM packages, and discussed the trends we
 found.
 
 
-The rest of the paper is organized as follows: In Section~\ref{s:relwork}, we discuss the related works and other studies that have found similar results. In Section~\ref{s:soft}, we give some details about both the commercial software and NPM packages we analyzed. Details of the data collected for the study is discussed in Section~\ref{s:data}. Section~\ref{s:datapre} lists the data preprocessing steps we followed. We discuss the simulation study we performed for choosing the best performing BN structure search method that was used in subsequent analysis in Section~\ref{s:sim}. In Section~\ref{s:explain}, we present the different modeling approaches used to explain the number of exceptions(crashes) for the commercial softwares we studied and the results of that study. A comparison of our result and already published results is presented in Section~\ref{sec:compare}. 
+The rest of the paper is organized as follows: In Section~\ref{s:relwork}, we discuss the related works. In Section~\ref{s:soft}, we give some details about both the commercial software and NPM packages we analyzed. Details of the data collected for the study is discussed in Section~\ref{s:data}. Section~\ref{s:datapre} lists the data preprocessing steps we followed. We discuss the simulation study we performed for choosing the best performing BN structure search method that was used in subsequent analysis in Section~\ref{s:sim}. In Section~\ref{s:explain}, we present the different modeling approaches used to explain the number of exceptions(crashes) for the commercial software we studied and the results of that study. A comparison of our result and already published results is presented in Section~\ref{sec:compare}. 
 The quality metric we used is discussed in Section~\ref{s:qual}. The result of the analysis of the NPM packages is presented in Section~\ref{s:npm}. We discuss the implications of our result in Section~\ref{s:implication}. Finally, we discuss the limitations of our study in Section~\ref{s:limitation} and conclude the paper in Section~\ref{s:conclusion}.  
 
 \section{Related Work}\label{s:relwork}
@@ -420,7 +419,7 @@ We used the API provided by NPM for collecting daily downloads of the 4430 NPM p
 
 To obtain the metadata information for every package in NPM, we wrote a ``follower" script, as described in 
 \\ \textit{https://github.com/npm/registry/blob/master/docs/follower.md}.
-The output contained the metadata information for all releases of all packages in NPM. From this we extracted the URL of GitHub repositories of the packages. Some NPM packages do not have a valid GitHub URL, so those were dropped from subsequent analysis. Using the Rest API provided by GitHub we collected information on the issues for all these NPM packages. Finally, we used the issue creation dates to construct a dataset of the total number of issues per day. We used the total number of issues instead of the number of open issues because we are interested in the number of issues encountered by the users of the packages. Whether an issue is resolved or not depends on a number of factors, \emph{e.g.} the number of developers, the responsiveness of the developers, the number of packages managed by each developer, the complexity of the problem, most of which are unrelated to usage, so we decided using the total number of issues is a much more reasonable option.
+The output contained the metadata information for all releases of all packages in NPM. From this we extracted the URL of GitHub repositories of the packages. Some NPM packages do not have a valid GitHub URL, so those were dropped from subsequent analysis. Using the Rest API provided by GitHub we collected information on the issues for all these NPM packages. Finally, we used the issue creation dates to construct a dataset of the total number of issues per day. We used the total number of issues instead of the number of open issues because we are interested in the number of issues encountered by the users of the packages. Whether an issue is resolved or not depends on a number of factors, \emph{e.g.} the number of developers, the responsiveness of the developers, the number of packages managed by each developer, the complexity of the problem; most of which are unrelated to usage, so we decided using the total number of issues is a much more reasonable option.
 
 Our final dataset for the NPM packages contained the number of recorded downloads per day and the total number of issues reported for that package until that day. The date range was from 2015-03-01 to 2018-08-31. 
 
@@ -545,7 +544,18 @@ The release date was converted from the Date format to numeric format, which
 resulted in the values for the release date variable being represented by the 
 difference in days from Unix time (counted from 1970-01-01).
 We found that all of the variables under consideration
-had a long-tailed distribution, so we took logarithm of them. Final distribution of the variables in available in our GitHub repository:\\ \url{https://github.com/tapjdey/release\_qual\_model}.
+had a long-tailed distribution, so we took logarithm of them. 
+The distribution of the variables of GA releases of Avaya communicator 
+for Android is shown in Figure~\ref{fig:distr}.
+The distribution of the variables of other applications  is available in our GitHub repository: \url{https://github.com/tapjdey/release\_qual\_model}.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.9\linewidth]{distr}%
+\caption{Distribution of the variables after transformation: GA releases of Avaya communicator for Android}
+\label{fig:distr}
+\vspace{-20pt}
+\end{figure}
 
 
 \section{Simulation Study for Selecting the Best BN Structure Search Method}\label{s:sim}
@@ -678,6 +688,7 @@ we are not aware of any that have a robust implementation.
 \includegraphics[width=0.65\linewidth]{custom}
 \caption{Custom model used for Simulation Study}
 \label{fig:theory}
+\vspace{-15pt}
 \end{figure}
 We performed the simulation study by first creating 
 a random BN (see Figure~\ref{fig:theory}) with 
@@ -762,6 +773,7 @@ MAP & 0.55 & 0.33 & 0.11 \\
 HC & 1.00 & 0.19 & 0.47\\ \hline
 \end{tabular}
 }}
+\vspace{-10pt}
 \end{table}
 
 The result of the simulation study is shown in Table~\ref{t:sim_result}, which shows 
@@ -801,6 +813,7 @@ As mentioned earlier, we conducted our analysis in three stages: first, we used 
 We chose LR for the simplicity, robustness and ease of interpretation. To better understand interrelationships among variable (since LR is not applicable for sets of highly correlated predictors) we used BN models. Finally, to establish the 
 predictive capabilities of our models we used RF, which is known as one of the best Machine Learning classifiers. That way we could both obtain the most insight and also to validate our findings through the use of radically different approaches.
 
+\vspace{-10pt}
 \subsection{Linear Regression Model}
 We first used a linear regression model to discover the significant variables affecting the number of exceptions. The  output  of the fitted model is shown in Table~\ref{t:LR1}.The model resulted in a decent fit for the GA releases of Avaya Communicator for Android, given the sample size of 173, with adjusted $R^2$ of 0.481 (which is higher than  0.435, the adjusted $R^2$  reported with our previous approach~\cite{dey2018modeling}), and the variable ``New.Users'' was the most significant predictor while ``Release.Date'', ``Usage Intensity'', and ``Usage Frequency'' were also statistically significant. For the development releases of the same, only ``New.Users'' was significant, and it resulted in a good fit, with adjusted $R^2$ of 0.781.
 Finally, for the GA releases of Avaya mobile SIP for iOS, the value of $R^2$ was 0.874, and ``New.Users'', ``Release.Date'', and ``Release.Duration'' were the significant variables.
@@ -825,6 +838,7 @@ Finally, for the GA releases of Avaya mobile SIP for iOS, the value of $R^2$ was
   \hline
 \end{tabular}
 }
+\vspace{-10pt}
 \end{table}
 
 
@@ -849,6 +863,7 @@ obtained by averaging 50,000 candidate networks. We used a Threshold of 0.85, as
 \includegraphics[width=0.7\linewidth]{AGA}%
 \caption{Final BN Model for GA releases of Avaya Communicator for Android (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link) }
 \label{fig:finalAGA}
+\vspace{-10pt}
 \end{figure}
 
 \begin{figure}[!t]
@@ -856,6 +871,7 @@ obtained by averaging 50,000 candidate networks. We used a Threshold of 0.85, as
 \includegraphics[width=0.7\linewidth]{AD}%
 \caption{Final BN Model for Development releases of Avaya Communicator for Android (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link) }
 \label{fig:finalAD}
+\vspace{-10pt}
 \end{figure}
 
 \begin{figure}[!t]
@@ -863,6 +879,7 @@ obtained by averaging 50,000 candidate networks. We used a Threshold of 0.85, as
 \includegraphics[width=0.7\linewidth]{i}%
 \caption{Final BN Model for GA releases of Avaya mobile SIP for iOS (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link) }
 \label{fig:finalI}
+\vspace{-10pt}
 \end{figure}
 
 \begin{table}[ht]
@@ -906,6 +923,7 @@ Exceptions & New.Users & 1.00 & 0.34 \\
    \hline
 \end{tabular}
 }
+\vspace{-10pt}
 \end{table}
 
 The result form a bootstrap run shows the relative strength of the
@@ -962,6 +980,7 @@ variable importance plot still shows the number of new users is the most importa
 \includegraphics[width=0.4\linewidth]{rfI}%
 \caption{Variable Importance Plot of RF model for ``Exceptions" for GA releases of Avaya mobile SIP for iOS}
 \label{fig:rfI}
+\vspace{-10pt}
 \end{figure}
 
 \section{Comparison with published results}\label{sec:compare}
@@ -979,7 +998,7 @@ number of users the number of Modification Requests (MR tickets) increase around
 which is less than what would have been predicted by our model ($1.78$). Although we
 were unable to do a direct comparison to another mobile application, these findings add more context to our result, and indicates the necessity of further studies that publish their datasets to understand the usage-fault relationship in a wider range of applications.
 
-
+\vspace{-10pt}
 \section{Application of our model: A derived measure of Quality}\label{s:qual}
 In order to arrive at the usage independent quality measure, we follow the framework of establishing laws governing relationships among measures of software development proposed in~\cite{mockuskeynote}. Law is an equivalent of invariance, i.e. a function of measures that is constant under certain conditions. In this case we want it to be constant for releases that have the same quality. First, the law requires a plausible mechanism and second, an empirical validation. Each new user may have a different type of phone, operating system, service provider, geographic region, and usage pattern. It is reasonable to assume that some of these configurations lead to software malfunction manifested as an exception. This provides us with a plausible mechanism on how precisely more new users of one release might generate more exceptions even if we have two releases of identical quality. To obtain empirical validation of this postulated mechanistic relationship we rely on our models, all of which show the number of software 
 exceptions to be dependent on the number of users and on software release date. Therefore,
@@ -1022,6 +1041,7 @@ Finally, for the GA releases of Avaya mobile SIP for iOS, the LR model shows tha
   \hline
 \end{tabular}
 }
+\vspace{-10pt}
 \end{table}
 
 
@@ -1030,6 +1050,7 @@ Finally, for the GA releases of Avaya mobile SIP for iOS, the LR model shows tha
 \includegraphics[width=0.6\linewidth]{qAGA}%
 \caption{Bayesian Network  Model for ``Quality" - GA releases of Avaya Communicator for Android (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link)}
 \label{fig:bn2AGA}
+\vspace{-10pt}
 \end{figure}
 
 \begin{figure}[!t]
@@ -1037,6 +1058,7 @@ Finally, for the GA releases of Avaya mobile SIP for iOS, the LR model shows tha
 \includegraphics[width=0.6\linewidth]{qAD}%
 \caption{Bayesian Network  Model for ``Quality" - Development releases of Avaya Communicator for Android (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link)}
 \label{fig:bn2AD}
+\vspace{-10pt}
 \end{figure}
 
 \begin{figure}[!t]
@@ -1044,6 +1066,7 @@ Finally, for the GA releases of Avaya mobile SIP for iOS, the LR model shows tha
 \includegraphics[width=0.6\linewidth]{qI}%
 \caption{Bayesian Network  Model for ``Quality" - GA releases of Avaya mobile SIP for iOS (with c: coefficients after fitting the transformed, but unscaled data, p: p-value  for the link)}
 \label{fig:bn2I}
+\vspace{-10pt}
 \end{figure}
 
 
@@ -1068,18 +1091,20 @@ Finally, for the GA releases of Avaya mobile SIP for iOS, the LR model shows tha
 \includegraphics[width=0.4\linewidth]{rfqI}
 \caption{Variable Importance plot from the Random Forest  Model for Quality Variable - GA releases of Avaya mobile SIP for iOS}
 \label{fig:rf2I}
+\vspace{-15pt}
 \end{figure}
 
 The results from these analyses clearly indicate that the quality measure defined by the number of exceptions per user is independent of software usage, and, therefore, suitable for comparing the quality of software development process among different releases of a software.
 
 \subsection{Timeline of Quality}
-We wanted to see how the perceived quality of the releases of the different mobile applications described above change with time. As a general trend, we observe that most of the exceptions occur right after the release date. then, as the number of users keep increasing with time, the value of the quality variable drop and come to a stable value.  In this paper we show only the timeline for GA releases of Avaya Communicator for Android (Figure~\ref{fig:tI}), since the other two softwares had a lot of releases, making them difficult to identify from the plot. The other two are added as supplemental material. %%%%%
+We wanted to see how the perceived quality of the releases of the different mobile applications described above change with time. As a general trend, we observe that most of the exceptions occur right after the release date. then, as the number of users keep increasing with time, the value of the quality variable drop and come to a stable value.  In this paper we show only the timeline for GA releases of Avaya Communicator for Android (Figure~\ref{fig:tI}), since the other two softwares had a lot of releases, making them difficult to identify from the plot. The other two are  are available in our GitHub repository:\\ \url{https://github.com/tapjdey/release\_qual\_model}.
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\linewidth]{timeline_I}
 \caption{Timeline for Quality Variable - GA releases of Avaya Communicator for Android}
 \label{fig:tI}
+\vspace{-10pt}
 \end{figure}
 
 
@@ -1100,8 +1125,10 @@ For illustration, in Figure~\ref{fig:qNPM} we are showing the histogram of the m
 \begin{figure}[!t]
 \centering
 \includegraphics[width=0.75\linewidth]{qNPM}
+\vspace{-10pt}
 \caption{Histogram of Median Values of Quality of NPM packages}
 \label{fig:qNPM}
+\vspace{-10pt}
 \end{figure}
 
 Further inspection showed that the value of the quality variable increases with time for almost half of the packages (2030 out of 4430 packages, 45.8\%), unlike what we observed for the mobile applications, where for almost all of the releases of the three softwares, the value of the quality variable decreased with time.
@@ -1122,6 +1149,7 @@ Here we also show the timelines of the quality variable we defined (\emph{i.e.} 
 \caption{Timeline for Quality Variable for NPM package: babel}
 \label{fig:tNb}
 \end{minipage}
+\vspace{-10pt}
 \end{figure}
 
 \begin{figure}[!t]
@@ -1138,11 +1166,12 @@ Here we also show the timelines of the quality variable we defined (\emph{i.e.} 
 \caption{Timeline for Quality Variable for NPM package: ember-cli}
 \label{fig:tNe}
 \end{minipage}
+\vspace{-10pt}
 \end{figure}
 
 
 
-
+\vspace{-10pt}
 \section{Implication of our Findings}\label{s:implication}
 
 Our analysis makes it evident that the number of new
@@ -1278,7 +1307,7 @@ Overall, this study was not a direct extension of the previous work,
 rather, it was an extension of the concept and its application in a different domain.
 
 
-
+\vspace{-10pt}
 \section{Conclusion}\label{s:conclusion}
 
 From the practical perspective we have established
