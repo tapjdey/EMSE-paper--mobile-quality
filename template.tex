@@ -31,7 +31,6 @@
 \usepackage{hhline}
 \usepackage{fancybox}
 \usepackage{balance}
-\usepackage{graphicx}
 \usepackage{epstopdf}
 %\usepackage{subcaption}
 \epstopdfsetup{outdir=./}
@@ -81,7 +80,7 @@
             University of Tennessee, Knoxville \\
             Knoxville, Tennessee, USA \\
             \email{tdey2@vols.utk.edu}, \email{audris@utk.edu} \\
-            ORCID: 0000-0002-1379-8539, N/A
+            %ORCID: 0000-0002-1379-8539, N/A
 }
 
 \date{Received: date / Accepted: date}
@@ -1080,12 +1079,12 @@ Finally, for the GA releases of Avaya mobile SIP for iOS, the LR model (Table~\r
 The results from these analyses clearly indicate that the quality measure defined by the number of exceptions per user is independent of software usage, and, therefore, suitable for comparing the quality of software development process among different releases of a software.
 
 \subsection{Timeline of Quality}
-We wanted to see how the perceived quality of the releases of the different mobile applications described above change with time. As a general trend, we observe that most of the exceptions occur right after the release date. then, as the number of users keep increasing with time, the value of the quality variable drop and come to a stable value.  In this paper we show only the timeline for GA releases of Avaya Communicator for Android (Figure~\ref{fig:tI}), since the other two softwares had a lot of releases, making them difficult to identify from the plot. The other two are  are available in our GitHub repository:\\ \url{https://github.com/tapjdey/release\_qual\_model}.
+We wanted to see how the perceived quality of the releases of the different mobile applications described above change with time. As a general trend, we observe that most of the exceptions occur right after the release date. then, as the number of users keep increasing with time, the value of the quality variable drop and come to a stable value.  In this paper we show only the timeline for GA releases of Avaya mobile SIP for iOS (Figure~\ref{fig:tI}), since the other two softwares had a lot of releases, making them difficult to identify from the plot. The other two are  are available in our GitHub repository:\\ \url{https://github.com/tapjdey/release\_qual\_model}.
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\linewidth]{timeline_I}
-\caption{Timeline for Quality Variable - GA releases of Avaya Communicator for Android}
+\caption{Timeline for Quality Variable - GA releases of Avaya mobile SIP for iOS}
 \label{fig:tI}
 \vspace{-10pt}
 \end{figure}
@@ -1353,7 +1352,7 @@ critically depends on how users behave.
 From the practical perspective, we hope that any mobile or web
 software project can easily apply and refine the presented approach
 of using Google Analytics data to improve the quality of their
-software.  Any Android OS or Apple iOS mobile application can freely use
+software.  Any Android OS or Apple iOS mobile application can use
 Google Analytics to monitor application usage and crashes, so the
 approach should be widely applicable. Despite that, we 
 are not aware of any prior empirical study that would leverages Google
@@ -1376,10 +1375,9 @@ it involves numerous, often enterprise, customers who may not agree.
 
 
 
-%\begin{acknowledgements}
-%If you'd like to thank anyone, place your comments here
-%and remove the percent signs.
-%\end{acknowledgements}
+\begin{acknowledgements}
+This work was supported by the National Science Foundation under Grant No. 1633437.
+\end{acknowledgements}
 
 % BibTeX users please use one of
 %\bibliographystyle{spbasic}      % basic style, author-year citations
