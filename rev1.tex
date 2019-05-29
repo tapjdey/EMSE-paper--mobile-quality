@@ -16,8 +16,8 @@
 \RequirePackage{fix-cm}
 %
 %\documentclass{svjour3}                     % onecolumn (standard format)
-%\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
-\documentclass[smallextended]{svjour3}       % onecolumn (second format)
+\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
+%\documentclass[smallextended]{svjour3}       % onecolumn (second format)
 %\documentclass[twocolumn]{svjour3}          % twocolumn
 %
 \smartqed  % flush right qed marks, e.g. at end of proof
@@ -129,7 +129,7 @@ Conclusions: We expect our result and our proposed quality measure will help
 
 Improving quality of software is one of the objectives of software
 engineering.  ``Software Quality'' has been defined in various ways,
-but in this paper we take a narrow focus on the manifestation of software
+however, in this paper we take a narrow focus on the manifestation of software
 defects as crashes observed from the perspective of the
 users. Observing a software crash, generally speaking, is a
 manifestation of low quality of the software to a user. 
@@ -792,7 +792,7 @@ would be useful for researchers using BN structure learning techniques.}
 
 \section{Answering the Research Questions: Results and Analysis}\label{s:result}
 
-\subsection{Explaining Exceptions for the Commercial Software}\label{s:explain}
+\subsection{RQ1: Modeling the relationship between Exceptions and other post-release variables}\label{s:explain}
 As mentioned earlier, we conducted our analysis in three stages: first, we used linear regression (LR) on the data with the number of exceptions as the response variable; then, we used Bayesian Network (BN) modeling approach to identify the interrelationship between the variables; and finally, we used a random forest (RF) model to verify the results. 
 
 \vspace{-10pt}
@@ -1125,7 +1125,7 @@ The $R^2$ values of the fitted models varied between 0 and 0.8637 (median: 0.498
 
 Since we just established that the number of issues of an NPM package depends on the number of daily downloads, a similar quality metric of number of issues per download should be applicable in this situation as well. 
 
-To check the quality of different packages, we looked at the minimum and median value of the quality metric for the 4430 packages. We didn't consider the absolute maximum value, since some packages had zero downloads for a few days, driving the value of the quality metric to infinity. So, we used the $90^{th}$ quantile value as a proxy for the maximum value. We looked at the packages for which the value of the quality metric was more than 1. The threshold was chosen because we were looking at the packages of really high values of the quality metric, and thus were of poor quality. We found that for 340 packages the $90^{th}$ quantile value of the quality metric was more than 1. The number was 100 and 3 when we looked at the median and minimum values respectively. The three packages for which the total number of issues over the number of daily downloads was more than 1 were '@ngrx/store', '@protobufjs/fetch', and '@protobufjs/inquire'. Overall, we found that the packages for which the value of the quality metric was more than 1 were mostly packages from a big project that were relatively less downloaded, \emph{e.g.} `babel-plugin-transform-es2015-block-scoped-functions' from babel project, `react-scripts' from facebook-react project etc. There were a few other packages that had very few downloads during most of its life-cycle since 2015, but had an increase in popularity later on, and thus were selected in our list of packages. However, since they had very few downloads for a long time, the median or maximum value of the quality metric was more than 1 (\emph{e.g.} `bubleify'). 
+To check the quality of different packages, we looked at the minimum and median value of the quality metric for the 4430 packages. We didn't consider the absolute maximum value, since some packages had zero downloads for a few days, driving the value of the quality metric to infinity. So, we used the $90^{th}$ quantile value as a proxy for the maximum value. We looked at the packages for which the value of the quality metric was more than 1. The threshold was chosen because we were looking at the packages of really high values of the quality metric, and thus were of poor quality. We found that for 340 packages the $90^{th}$ quantile value of the quality metric was more than 1. The number was 100 and 3 when we looked at the median and minimum values respectively. The three packages for which the total number of issues over the number of daily downloads was more than 1 were '@ngrx/store', '@protobufjs/fetch', and '@protobufjs/inquire'. Overall, we found that the packages for which the value of the quality metric was more than 1 were mostly packages from a big project that were relatively less downloaded, \emph{e.g.} `babel-plugin-transform-es2015-bLOCk-scoped-functions' from babel project, `react-scripts' from facebook-react project etc. There were a few other packages that had very few downloads during most of its life-cycle since 2015, but had an increase in popularity later on, and thus were selected in our list of packages. However, since they had very few downloads for a long time, the median or maximum value of the quality metric was more than 1 (\emph{e.g.} `bubleify'). 
 For illustration, in Figure~\ref{fig:qNPM} we are showing the histogram of the median value of the quality metric for the 4430 NPM packages, which gives some idea about the overall quality distribution of the packages in the NPM ecosystem. We can see that around 75\% of the packages in NPM have a median value of the quality metric less than 0.01, which mean, overall, for around 75\% of the NPM packages, less than 1 in 100 regular users ever (since we are looking at the total number of issues) file an issue.
 
 \begin{figure}[!t]
@@ -1511,6 +1511,102 @@ This work was supported by the National Science Foundation (U.S.) under Grant No
 
 \section*{APPENDIX I: Exploring the Effect of Source Code Complexity on Exceptions for the Mobile Applications}
 
+\subsection*{The Source Code data for the mobile applications}
+
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.75\linewidth]{loc}
+\vspace{-10pt}
+\caption{Observed and predicted values of LOC for Android data}
+\label{fig:LOC}
+\vspace{-10pt}
+\end{figure}
+
+
+As we mentioned before, the mobile applications under consideration are closed-source commercial products. Therefore, obtaining any information on the source code proved difficult. Finally, we were able to obtain a partial commit log with informations like what is the file that is updated in the commit, which module a particular commit belongs to, who is the author of the commit, if the commit is related to fixing a reported bug, the timestamp of the commit, and the number of lines of code in the updated file. However, a number of issues associated with the data made using it in a model difficult. The issues included:
+\begin{itemize}
+\item The development team worked on multiple releases simultaneously, and we had no information about which version of which file was part of which release.
+\item The commit log might or might not have information on all the files that went into an application, and we had no way of verifying that.
+\item The date range in the received commit log was from 2009-01-02 to 2014-12-17, but the duration of the releases under consideration in this study was from 2013-09-11 to 2016-05-18. So, the later releases were not covered by the received commit log data.
+\end{itemize}
+
+However, since this is the only data we obtained about any information about the source code, we made the following assumptions:
+
+\begin{itemize}
+\item We had some idea about which modules belong to which application, so we listed the modules for the mobile SIP for iOS and the Communicator for Android. We assumed all files in the modules belong to all the releases of the particular application, and these are the only files in the application.
+\item Since we had no information about which files went into into which release, we assumed the latest versions of all files in the respective modules until the release date went into that particular release.
+\item We assumed that number of lines of code (LOC) can be used as a proxy for the traditional complexity measures. This assumption is not unreasonable, since in case of this project these two measures are extremely closely correlated, as was confirmed by one of the authors who had close ties with the development team.
+\end{itemize}
+
+We calculated the LOC for a release as the sum of the number of lines of code of the latest versions of all files present in the relevant modules until the day of the release. As we have a number of missing data points due to the commit log not covering the later releases, we decided to fit a model for extrapolating the value of LOC for the later releases. Although the commit log does not cover the later releases, it does cover a span of almost 6 years and the applications have commits on a regular basis. So a model with only the commit date as predictor and the LOC for the particular application as the response variable still works pretty well. We tried a number of different models for extrapolating the value of LOC: linear regression (OLS), Random Forest regression, Support Vector Machine (SVM) regression, and Generalized Additive Model (GAM) regression. The GAM regression produced the best results for extrapolation. The observed and predicted LOC for the Android data against time is shown in Figure~\ref{fig:LOC}. The predicted values are shown for the release dates of the GA releases of the Android application. So, in the final dataset, we had the observed values of LOC where we had the data, and the rest of the values were filled with the predicted values of LOC. It is worth mentioning here that we used two different GAM models, one for the Android data, the other for the iOS data. Moreover, since we did not have any way to distinguish between the development and GA releases of the Android application, we used the same mechanism to calculate LOC for both types of releases.
+
+
+\begin{figure}[!t]
+\centering
+\begin{minipage}{.45\textwidth}
+\includegraphics[width=\linewidth]{loc_ga_bn}%
+\caption{BN model with LOC measure for GA releases of Avaya Communicator for Android}
+\label{fig:lbng}
+\end{minipage}
+\hfill
+\begin{minipage}{.45\textwidth}
+\includegraphics[width=\linewidth]{loc_d_bn}%
+\caption{BN model with LOC measure for development releases of Avaya Communicator for Android }
+\label{fig:lbnd}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\begin{minipage}{.45\textwidth}
+\includegraphics[width=\linewidth]{loc_i_bn}%
+\caption{BN model with LOC measure for GA releases of mobile SIP for iOS}
+\label{fig:lbni}
+\end{minipage}
+\hfill
+\begin{minipage}{.45\textwidth}
+\includegraphics[width=0.7\linewidth]{loc_ga_rf}%
+\caption{Variable Importance Plot of RF model for ``Exceptions" for GA releases of Avaya Communicator for Android}
+\label{fig:lrfg}
+\end{minipage}
+\end{figure}
+
+
+
+\begin{figure}[!t]
+\centering
+\begin{minipage}{.45\textwidth}
+\includegraphics[width=0.7\linewidth]{loc_d_rf}%
+\caption{Variable Importance Plot of RF model for ``Exceptions" for development releases of Avaya Communicator for Android}
+\label{fig:lrfd}
+\end{minipage}
+\hfill
+\begin{minipage}{.45\textwidth}
+\includegraphics[width=0.7\linewidth]{loc_i_rf}%
+\caption{Variable Importance Plot of RF model for ``Exceptions" for GA releases of mobile SIP for iOS}
+\label{fig:lrfi}
+\end{minipage}
+\end{figure}
+
+
+
+\subsection*{Methodology}
+We added the LOC variable to our existing dataset for the three mobile applications. Then we fitted the models as before, except, we did not calculate the OLS estimator, since there was a very high correlation between the Release Date and LOC variables. We fitted the BN and RF models to the new dataset to examine the importance of the LOC variable and the fit of the new models.
+
+\subsection*{Results}
+
+The BN models for the GA and development releases for Avaya communicator for Android and GA releases of Avaya mobile SIP for iOS are shown in Figures~\ref{fig:lbng},~\ref{fig:lbnd}, and ~\ref{fig:lbni} respectively, with the BN models showing a better fit with the LOC variable added, with $R^2$ values of 0.90, 0.73, and 0.53 respectively. 
+
+The variable importance plots for the for the GA and development releases for Avaya communicator for Android and GA releases of Avaya mobile SIP for iOS are shown in Figures~\ref{fig:lrfg},~\ref{fig:lrfd}, and ~\ref{fig:lrfi} respectively. The $R^2$ values of the RF models also showed improvement, having values of 0.49, 0.61, and 0.35 respectively.
+
+\subsection*{Discussion}
+
+The results of the fitted BN and RF models indicate that LOC is an important predictor for Exceptions. For the BN models for all three cases, LOC was directly connected to Exceptions, even replacing the connection between Release Dates and Exceptions in Figure~\ref{fig:lbnd}. For the three RF models as well, the LOC variable was shown to be an important predictor. 
+
+However, the number of new users still remained the most important predictor, as can be seen from the RF variable importance plots. Moreover, though the fit of the models improved, they did not improve a lot. Although the calculation of the said measure involved a number of assumptions, due to not having access to the actual source code of the software, the results show that the code complexity measure has no relationship with the number of new users, which is as we hypothesized. 
+
+Since the goal of our study was to derive a usage-independent measure of quality, the quality metric we proposed should be independent of the other usage variables, viz. usage frequency and intensity. We do not need our quality metric to be independent of code complexity, because what we intend to do is objectively compare the qualities of different releases/softwares regardless of how much usage each of them had. With that view in mind, this piece of analysis is not directly related to our goal, so it was put as an appendix.
 
 \end{document}
 % end of file template.tex
