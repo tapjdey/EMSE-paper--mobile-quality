@@ -377,7 +377,7 @@ methods. The major preprocessing step is aggregating the measures to a per-relea
 granularity. We had two main reasons for aggregating the data:
 \begin{enumerate}
 \item The goals of our study are concerned with identifying the relationship between exceptions and other post-deployment variables for different releases, and defining a quality measure to compare the qualities of different releases. Therefore, having the measures aggregated at per-release granularity is essential.
-\item We would have been able to take a time-series based approach and still work out our goals if the releases were cleanly separated in time, i.e. if there were no overlap between releases. Unfortunately, we see from the data that users continue to use one release long after the subsequent releases are available, and there is no clear pattern about how long a release is used. Therefore, we had to aggregate the data to a per-release level to be able to achieve the goals of this study.
+\item We would have been able to take a time-series based approach and still work out our goals if the releases were cleanly separated in time, i.e. if there were no overlap between releases. Unfortunately, we observed from the data that users continue to use one release long after the subsequent releases are available, and there is no clear pattern about how long a release is used. Therefore, we had to aggregate the data to a per-release level to be able to achieve the goals of this study.
 \end{enumerate}
 
 The preprocessing steps we took are discussed below:
@@ -488,8 +488,7 @@ with the corresponding variable names we used in the model enclosed in brackets.
 %\vspace{-10pt}
 \end{table}
 
-It is worth mentioning that we had no control over which variables to measure during data collection, however,
-while the set of variables we obtained are not exhaustive, we believe the three usage related variables: number of new users, usage intensity, and usage frequency adequately capture and report how much usage a software is getting. 
+To reiterate what we mentioned earlier, we had no control over which variables to measure during data collection, however, while the set of variables we obtained are not exhaustive, we believe the three usage related variables: number of new users, usage intensity, and usage frequency adequately capture and report how much usage a software is getting. 
 
 \noindent
 \textbf{Log-transformation of variables:}
@@ -511,7 +510,10 @@ The distribution of the variables of other applications  is available in our Git
 \end{figure}
 
 \subsection{The NPM Packages}
-The two notable points about the NPM data are:\\ (1). We limited our study to only the more popular packages in the NPM ecosystem, since a vast majority of NPM packages have a very limited number of users, and can not truly be considered a candidate for a study exploring the relationship between software usage and software faults/exceptions/issues. As mentioned earlier, we defined the criteria that a package should have more than 10,000 downloads per month (this is the criteria for popularity we defined) and a GitHub page with issues enabled to be a part of our study. Under this condition, we ended up with 4430 NPM packages which is roughly 0.5\% of the entire NPM ecosystem (which had around 800,000 packages at the time of data collection).\\
+The two notable points about the NPM data are:\\ (1). We limited our study to only the more popular packages in the NPM ecosystem, since a vast majority of NPM packages have a very limited number of users, and can not truly be considered a candidate for a study exploring the relationship between software usage and software faults/exceptions/issues. As mentioned earlier, we defined the criteria that a package should have more than 10,000 downloads per month (this is the criteria for popularity we defined, because, according to~\cite{npmdl}, automated downloads are expected to be
+around 50 per day, or 1500 per month, and packages with over 10K
+downloads should, therefore, not be noticeably impacted by 
+ downloads by automated sources.) and a GitHub page with issues enabled to be a part of our study. Under this condition, we ended up with 4430 NPM packages which is roughly 0.5\% of the entire NPM ecosystem (which had around 800,000 packages at the time of data collection).\\
 (2). The NPM data we obtained was relatively clean, and since we only used this data to extend the external validity of our study, we did not employ any preprocessing steps on this data. 
 
 \subsubsection{The NPM Ecosystem}
@@ -520,25 +522,18 @@ Node Package Manager or NPM is one of the most active and dynamic software ecosy
 usage we could find for open-source projects, and is a far better measure than, \emph{e.g.} number of stars of a GitHub repository which was used in studies like~\cite{borges2016understanding} as a measure of popularity, which is little different from usage as we measure it.
 
 \subsubsection{NPM data: Defining collection parameters}
-We only looked at the NPM packages that have more than 
-10,000 downloads a month. According to~\cite{npmdl}, 
-automated downloads are expected to be
-around 50 per day, or 1500 per month. Packages with over 10K
-downloads should, therefore, not be noticeably impacted by 
- downloads by automated sources. We collected the issues
-associated with the projects from their individual GitHub
-repositories. We found 4430 projects which had more than 10,000
+ We found 4430 projects which had more than 10,000
 monthly downloads since January 2018 and also had public GitHub
 repositories with nonzero number of issues.  We collected the number
 of downloads and the total number of issues for all these packages
 from 2015-03-01 to 2018-08-31. However, we did not conduct a release
-by release comparison for these packages, since the release
+by release comparison for these packages, because the release
 durations vary by a lot for most packages. Since the recorded number
 of downloads is a mix of downloads by human and non-human users, a
 release by release comparison would not give a reliable picture of
 the effect of actual usage by human users on the number of
 issues. However, the number of downloads by bots are relatively
-stable and vary only with time~\cite{npmdl}, so controlling for the date would
+stable and vary only with time~\cite{npmdl}, so controlling for the date (time variable) would
 eliminate the spurious effects of downloads by bots. So, we decided
 to focus on the entire packages instead of releases of the packages,
 and measured the effect daily downloads have on number of issues of
@@ -547,17 +542,17 @@ that package on that day after controlling for the calender date.
 \vspace{-10pt}
 \subsubsection{NPM data: Data collection}
 
-We used the API provided by NPM for collecting daily downloads of the 4430 NPM packages we studied. (The API documentation is available in: \textit{https://github.com/npm/registry/blob/master/docs/download-counts.md}).
+We used the API provided by NPM for collecting daily downloads of the 4430 NPM packages we studied. (The API documentation is available in:\\ \textit{https://github.com/npm/registry/blob/master/docs/download-counts.md}).
 
 To obtain the metadata information for every package in NPM, we wrote a ``follower" script, as described in 
 \\ \textit{https://github.com/npm/registry/blob/master/docs/follower.md}.
-The output contained the metadata information for all releases of all packages in NPM. From this we extracted the URL of GitHub repositories of the packages. Some NPM packages do not have a valid GitHub URL, so those were dropped from subsequent analysis. Using the Rest API provided by GitHub we collected information on the issues for all these NPM packages. Finally, we used the issue creation dates to construct a dataset of the total number of issues per day. We used the total number of issues instead of the number of open issues because we are interested in the number of issues encountered by the users of the packages. Whether an issue is resolved or not depends on a number of factors, \emph{e.g.} the number of developers, the responsiveness of the developers, the number of packages managed by each developer, the complexity of the problem; most of which are unrelated to usage, so we decided using the total number of issues is a much more reasonable option.
+The output contained the metadata information for all releases of all packages in NPM. From this we extracted the URL of GitHub repositories of the packages. Some NPM packages do not have a valid GitHub URL, so those were dropped from subsequent analysis, as per the criteria we defined. Using the Rest API provided by GitHub we collected information on the issues for all these NPM packages. Finally, we used the issue creation dates to construct a dataset of the total number of issues per day. We used the total number of issues instead of the number of open issues because we are interested in the number of issues encountered by the users of the packages. Whether an issue is resolved or not depends on a number of factors, \emph{e.g.} the number of developers, the responsiveness of the developers, the number of packages managed by each developer, the complexity of the problem; most of which are unrelated to usage, so we decided using the total number of issues is a much more reasonable option.
 
 Our final dataset for the NPM packages contained the number of recorded downloads per day and the total number of issues reported for that package until that day. The date range was from 2015-03-01 to 2018-08-31. 
 
 \section{Methodological Overview}\label{s:method}
 
-In this section we describe the methodology we followed in this paper. We employed three different modeling techniques for finding out the relationship among the post-release variables: (1) The Linear Regression (OLS) method, (2) Bayesian structure search method, and (3) Random Forest Regression method. Since we primarily focus on finding which variables are have the most impact on the number of exceptions, we used it as the response variable for the OLS and Random Forest regression models. 
+In this section we describe the methodology we followed in this paper. We employed three different modeling techniques for finding out the relationship among the post-release variables: (1) The Linear Regression (Ordinary Least Squares - OLS) method, (2) Bayesian structure search method, and (3) Random Forest Regression method. Since we primarily focus on finding which variables are have the most impact on the number of exceptions, we used it as the response variable for the OLS and Random Forest regression models. 
 
 We started by using the OLS estimator since it is one of the simplest modeling methods that gives good models in a lot of situations and the result is easy to interpret. However, we were unsure about the accuracy of the result due to the presence to moderate to high correlation between some of the predictor variables (e.g. the Release Date and Release Duration variables had a correlation of -0.88 for the iOS application data). 
 Therefore, we decided to use Bayesian Network (BN) for modeling the interrelationship among these variables, since the accuracy of this model is unaffected by the presence of high correlation among the predictors. Variables with high correlation simply appear as connected nodes in the final model. Since the use of Bayesian Network models is not very common in this context and it is one of the main contributions of this paper, we discuss BN models in greater detail later in this section. The third and last modeling approach we used is Random Forest regression method. Random Forest is one of the best off-the-shelf models that work well with almost all types of data and generally does  and it is easy to get the relative importance of the predictor variables from a fitted model. These two factors led us to use Random Forest regression as a third modeling technique to identify the most impactful predictors explaining the number of exceptions. To find the best fitting Random Forest model, we performed a grid search using the ``tune'' function of the ``e1071'' R package to find the best model parameters ``ntree'': the number of tress to grow, and ``mtry'': the number of variables randomly sampled as candidates at each split. Since the sample size of datasets are limited, we used 10 times 2 fold cross-validation as the tuning method. 
@@ -664,7 +659,8 @@ and needs to be determined for each domain. For instance, a threshold of
  95\% of the bootstrap optimized models were selected. 
  
 Many applications of BNs discretize the data prior to applying
-the structure learning methods, and in some cases where the data distribution is too skewed to fit the normality assumption, discretizing the data produces better models than continuous data, so we considered it as a possibility as well.
+the structure learning methods, and in some cases where the data distribution is too skewed to fit the normality assumption, discretizing the data produces better models than using continuous data, so we considered it as a possibility as well.
+
 Using continuous data works best
 when the random variables (possibly after a transformation) 
 have Gaussian distribution. While using
@@ -704,7 +700,7 @@ For demonstration purposes  we use the same variable names.
 We fitted this graph with our data on GA releases of Avaya communicator for Android
  (log-transformed and scaled) to generate values for the coefficients 
 for each edge. This model was used in our simulation study going forward.
-We created 1000 different datasets from the BN structure in Figure~\ref{fig:theory},
+We created 1000 different simulated datasets from the BN structure in Figure~\ref{fig:theory},
 and applied the different structure search algorithms 
 (both continuous and discrete versions, where available) listed above. Our performance metric
 is finding how many times the different algorithms can recover the 
@@ -826,7 +822,7 @@ As mentioned earlier, we conducted our analysis in three stages: first, we used 
 We first used a linear regression model (OLS) to discover the significant variables affecting the number of exceptions. The  output  of the fitted model is shown in Table~\ref{t:LR1}.The model resulted in a decent fit for the GA releases of Avaya Communicator for Android, given the sample size of 173, with adjusted $R^2$ of 0.481 (which is higher than  0.435, the adjusted $R^2$  reported with our previous approach~\cite{dey2018modeling}), and the variable ``New.Users'' was the most significant predictor while ``Release.Date'', ``Usage Intensity'', and ``Usage Frequency'' were also statistically significant. For the development releases of the same, only ``New.Users'' was significant, and it resulted in a good fit, with adjusted $R^2$ of 0.781.
 Finally, for the GA releases of Avaya mobile SIP for iOS, the value of $R^2$ was 0.874, and ``New.Users'', ``Release.Date'', and ``Release.Duration'' were the significant variables.
 
-We were doubtful about the accuracy of the model since some of the predictors had a moderate to high degree of correlation. We checked the Variance Inflation Factor~\cite{menard1995applied} and found it be less than 5 for all predictors, which shows the effect of multicollinearity isn't very strong. However, we also wanted to verify other assumptions behind the OLS model. We went through the list of model assumptions provided in~\cite{ols}, and found that our model does not satisfy the Normality assumption (assumption 6 in~\cite{ols}) , i.e. the residuals are not normally distributed, nor does it satisfy the criteria that the variance of the errors term is constant, conditional on the all predictors (assumption 5 in~\cite{ols}). However, it satisfies assumptions 1-3 (linearity, random sample, and no perfect multicollinearity  assumptions) and the weaker assumption 4 (namely that: $(1)\ E($residuals$) = 0$ and $(2) Cov($each predictor, residuals$) = 0$), as mentioned in~\cite{ols}. Therefore, according to ~\cite{ols}, the OLS estimator we obtained is not BLUE (Best Linear Unbiased Estimator), but it is unbiased, and consistent.
+We were doubtful about the accuracy of the model since some of the predictors had a moderate to high degree of correlation. We checked the Variance Inflation Factor~\cite{menard1995applied} and found it be less than 5 for all predictors, which shows the effect of multicollinearity isn't very strong. However, we also wanted to verify other assumptions behind the OLS model. We went through the list of model assumptions provided in~\cite{ols}, and found that our model does not satisfy the Normality assumption (assumption 6 in~\cite{ols}) , i.e. the residuals are not normally distributed, nor does it satisfy the criteria that the variance of the errors term is constant, conditional on the all predictors (assumption 5 in~\cite{ols}). However, it satisfies assumptions 1-3 (linearity, random sample, and no perfect multicollinearity  assumptions) and the weaker assumption 4 (namely that: $(1)\ E($residuals$) = 0$ and $(2) Cov($each predictor, residuals$) = 0$), as mentioned in~\cite{ols}. Therefore, according to ~\cite{ols}, the OLS estimator we obtained is not BLUE (Best Linear Unbiased Estimator), but it is unbiased, and consistent. However, given the observed limitations of the OLS estimator, we decided to use other modeling approaches to verify the results reported by using this approach.
 
 
 \begin{table}[ht]
@@ -991,7 +987,7 @@ The best selected model parameters derived from tuning  show that the optimal mo
 \vspace{-10pt}
 \end{figure}
 
-\subsection{Application of our model: A derived measure of Quality}\label{s:qual}
+\subsection{RQ2: Deriving a usage-independent measure of Quality}\label{s:qual}
 
 \subsubsection{Obtaining the Quality measure}
 In order to arrive at the usage independent quality measure, we follow the framework of establishing laws governing relationships among measures of software development proposed in~\cite{mockuskeynote}. Law is an equivalent of invariance, i.e. a function of measures that is constant under certain conditions. In this case we want it to be constant for releases that have the same quality. First, the law requires a plausible mechanism and second, an empirical validation. Each new user may have a different type of phone, operating system, service provider, geographic region, and usage pattern. It is reasonable to assume that some of these configurations lead to software malfunction manifested as an exception. This provides us with a plausible mechanism on how precisely more new users of one release might generate more exceptions even if we have two releases of identical quality. 
@@ -1013,7 +1009,7 @@ Random Forest modeling approaches on the dataset containing this quality measure
 The result, as expected, shows that the quality of a software, measured by average number of faults experienced by each user, has no dependence on other usage variables. 
 The LR model of GA releases of Avaya Communicator for Android (Table~\ref{t:lr2}) suggest that other variables have some effect on the quality variable.
 The BN model(Figure~\ref{fig:bn2AGA}), obtained with a threshold of 0.85 from a bootstrapped Hill-Climbing structure search model, indicates the ``Quality'' variable depends only on  the ``Release.Date'' variable.
-Finally, the result of 10 times 2-fold cross-validation with the best RF model with the optimal values for ``ntree'' and ``mtry'' (Variable Importance plot in Figure~\ref{fig:rf2AGA}) indicates that the ``Release.Date'' variable is much more important compared to others, and the two usage related variables are of much lower importance. 
+Finally, the result of 10 times 2-fold cross-validation with the best RF model (Variable Importance plot in Figure~\ref{fig:rf2AGA}) with the optimal values for ``ntree''(300 in this case)) and ``mtry''(1 in this case)  indicates that the ``Release.Date'' variable is much more important compared to others, and the two usage related variables are of much lower importance. 
 
 For the development versions of Avaya Communicator for Android, all the predictor variables turned out be insignificant in both the LR (Table~\ref{t:lr2}) and the BN (Figure~\ref{fig:bn2AD}) models. Even the tuned RF model gives a really bad fit in the 10 times 2-fold cross-validation as well, with a $R^2$ value of -0.42 (the implication of a negative value of $R^2$ is as explained in~\cite{negRsq}), indicating the predictors are very poor. Still, the two usage related variables have the lowest importance in the variable importance plot as seen in Figure~\ref{fig:rf2AD}. 
 
@@ -1133,9 +1129,9 @@ We wanted to see how the perceived quality of the releases of the different mobi
 
 In Figure~\ref{fig:trend_ga},~\ref{fig:trend_dev}, and ~\ref{fig:trend_ios}, we show the relative trends of Exception and the Quality variable for the GA and development releases of the Android application and the GA releases of the iOS application respectively. We are not interested in the absolute values of the metrics, but the values of the metrics for a release relative to the values for other releases. We only show the releases with non-zero number of exceptions, since if the number of exceptions is zero, the the value of the quality metric is also zero. The blue dotted lines represent the releases dates of different releases, and the black marker and the red cross on the blue line represent the exceptions and the quality variable for that release respectively.
 
-We can see that for a number of releases, Exceptions and Quality follow a similar trend, i.e. if the number of exceptions increase, the value of the Quality variable increases accordingly. However, there are indeed a number of cases where the number of exceptions is relatively small, but the value of Quality variable is larger than that for other releases, e.g. for many of the GA releases for the Android application in 2016, or vice versa, e.g. the release around September 2015 for the  GA releases for the Android application. This indicates that if we simply keep on using the number of exceptions as the quality measure, we will misclassify a number of releases.
+We can see that for a number of releases, Exceptions and Quality follow a similar trend, i.e. if the number of exceptions increase, the value of the Quality variable increases accordingly. However, there are indeed a number of cases where the number of exceptions is relatively small, but the value of Quality variable is larger than that for other releases, e.g. for many of the GA releases for the Android application in 2016, or vice versa, e.g. the release around September 2015 for the  GA releases for the Android application. This indicates that if we simply keep on using the number of exceptions as the quality measure, we will misclassify (as being better or worse than other releases) a number of releases. This result supports our hypothesis that not accounting for the usage parameter will not systematically misclassify all releases, since the internal factors affecting the release are independent of the external factors, but would randomly misclassify some of them depending on how much usage a release is getting.
 
-\subsection{Analysis of the NPM Data: Results}\label{s:npm}
+\subsection{RQ3: Analysis of the NPM Data and Results}\label{s:npm}
 
 \subsubsection{methodology}
 
@@ -1149,9 +1145,9 @@ We found that out of the 4430 packages, only for 36 packages the p-value of the 
 
 The $R^2$ values of the fitted models varied between 0 and 0.8637 (median: 0.4982, standard deviation: 0.0618) before adjusting for the calender date , and between 0.019 and 0.999 (median: 0.9195, standard deviation: 0.0618) after  adjusting for the calender date. So, we can say that the number of daily downloads is a significant and important predictor for the number of issues encountered by the users for most of the packages and the effect is more pronounced when the effect of automated downloads is controlled by calendar date. 
 
-Since we just established that the number of issues of an NPM package depends on the number of daily downloads, a similar quality metric of number of issues per download should be applicable in this situation as well. 
+Since we just established that the number of issues of an NPM package depends on the number of daily downloads, a similar quality metric of the number of issues per download should be applicable in this situation as well. 
 
-To check the quality of different packages, we looked at the minimum and median value of the quality metric for the 4430 packages. We didn't consider the absolute maximum value, since some packages had zero downloads for a few days, driving the value of the quality metric to infinity. So, we used the $90^{th}$ quantile value as a proxy for the maximum value. We looked at the packages for which the value of the quality metric was more than 1. The threshold was chosen because we were looking at the packages of really high values of the quality metric, and thus were of poor quality. We found that for 340 packages the $90^{th}$ quantile value of the quality metric was more than 1. The number was 100 and 3 when we looked at the median and minimum values respectively. The three packages for which the total number of issues over the number of daily downloads was more than 1 were '@ngrx/store', '@protobufjs/fetch', and '@protobufjs/inquire'. Overall, we found that the packages for which the value of the quality metric was more than 1 were mostly packages from a big project that were relatively less downloaded, \emph{e.g.} `babel-plugin-transform-es2015-bLOCk-scoped-functions' from babel project, `react-scripts' from facebook-react project etc. There were a few other packages that had very few downloads during most of its life-cycle since 2015, but had an increase in popularity later on, and thus were selected in our list of packages. However, since they had very few downloads for a long time, the median or maximum value of the quality metric was more than 1 (\emph{e.g.} `bubleify'). 
+To check the quality of different packages, we looked at the minimum and median value of the quality metric for the 4430 packages. We didn't consider the absolute maximum value, since some packages had zero downloads for a few days, driving the value of the quality metric to infinity. So, we used the $90^{th}$ quantile value as a proxy for the maximum value. We looked at the packages for which the value of the quality metric was more than 1. The threshold was chosen because we were looking at the packages of really high values of the quality metric, and thus were of poor quality. We found that for 340 packages the $90^{th}$ quantile value of the quality metric was more than 1, i.e. they had more than 1 issue reported against them per download. The number was 100 and 3 when we looked at the median and minimum values respectively. The three packages for which the total number of issues over the number of daily downloads was more than 1 were '@ngrx/store', '@protobufjs/fetch', and '@protobufjs/inquire'. Overall, we found that the packages for which the value of the quality metric was more than 1 were mostly packages from a big project that were relatively less downloaded, \emph{e.g.} `babel-plugin-transform-es2015-bLOCk-scoped-functions' from babel project, `react-scripts' from facebook-react project etc. There were a few other packages that had very few downloads during most of its life-cycle since 2015, but had an increase in popularity later on, and thus were selected in our list of packages. However, since they had very few downloads for a long time, the median or maximum value of the quality metric was more than 1 (\emph{e.g.} `bubleify'). 
 For illustration, in Figure~\ref{fig:qNPM} we are showing the histogram of the median value of the quality metric for the 4430 NPM packages, which gives some idea about the overall quality distribution of the packages in the NPM ecosystem. We can see that around 75\% of the packages in NPM have a median value of the quality metric less than 0.01, which mean, overall, for around 75\% of the NPM packages, less than 1 in 100 regular users ever (since we are looking at the total number of issues) file an issue.
 
 \begin{figure}[!t]
@@ -1232,7 +1228,6 @@ This may indicate that as the software, the OS, as well as the hardware are beco
 more complex with time, which is consistent with a rapid growth of
 functionality and the size of associated code base. The Android app is seeing more crashes due to the variations in the devices and the OS, whereas for iOS, since the devices as well as the OS versions are tightly controlled, the users are seeing less issues, although we have no explicit evidence to support our speculation. 
 
-
 An interesting observation from the model is the lack of any direct relationship 
 between exceptions and the intensity or frequency of usage.
 One possibility is that exceptions happen for specific Android/
@@ -1248,21 +1243,19 @@ that most of the issues happen soon after deploying the release
 and the chances of reporting a defect for a new release drops 
 very rapidly with time after installation.
 
-Our models show that the number of new users is the most important variable
-for predicting the number of exceptions. However, they also show that 
-some of the variance in exceptions remain unexplained using these predictors.
-This result is not surprising, since we did not consider any code related metrics
-like code complexity which could have an impact on the number of exceptions.
-However, the lack of code complexity measures in our models do not undermine 
-our result, because of the following reasons: \\(1) The goal of our study is studying the relationship 
+Our models  also show that some of the variance in exceptions remain unexplained using these predictors.
+This result is not surprising, since we did not include any internal factors
+like code complexity which could have an impact on the number of exceptions in our models.
+However, this does not undermine the validity our result in the context of the goals of this 
+paper because: \\(1) The goal of our study is studying the relationship 
 between exceptions and other \textbf{post-deployment} variables, and we wanted to
 derive a quality measure that is independent of \textbf{usage}, not one that is independent of
-code complexity. \\
+code complexity or any other internal factor. \\
 (2) Any of the code complexity measures is unlikely to be a confounding variable in this scenario,
 since a confounder is a variable that affects both the independent and dependent variables, and 
 there is no empirical evidence in existing literature suggesting there is a a direct connection between 
 code complexity and the extent of usage. While such a connection is hypothetically possible for open-source
-projects, since the users might be more willing to work with a simpler code which is easier to tweak, for a closed-source scenario such as the one we presented in this study, such a relationship is practically impossible, since the users never see the source code.
+projects, since the users might be more willing to work with a simpler code which is easier to tweak, for a closed-source scenario such as the one we presented in this study, such a relationship is practically impossible, since the users never see the source code. The result of the analysis presented in \hyperref[app1]{Appendix I} supports this hypothesis about the independence of the internal and external(usage) factors.
 Our study established the link between usage and exceptions, and we derived a 
 usage-independent quality measure, fulfilling the goals of the study.
 
@@ -1277,7 +1270,12 @@ We found that the exceptions are a result of more new users and the extent
 of usage does not appear to have a direct effect on the number of new users.
 }
  
-Overall, none of the three models indicate that ``Usage.Frequency'' or ``Usage.Intensity'' have any effect on the ``Quality'' variable. We, therefore, suggest that the exceptions per new user, or a metric similar to that, can be used as a software development quality metric to compare quality of different releases and to quantifying the impact of variables representing the development process of a release.
+Overall, none of the three models indicate that ``Usage.Frequency'' or ``Usage.Intensity'' have any effect on the ``Quality'' variable. We, therefore, suggest that the exceptions per new user, or a metric similar to that, can be used as a software development quality metric to objectively compare quality of different releases. The wider practical implication of this finding is twofold. 
+
+\begin{enumerate}
+\item Our findings prove that due to the interdependence of usage and the observed number of software failures (like exceptions), \emph{any} quality measure (like number of defects, defect density, mean time between failures) that is dependent on any of these observed number software failures would misclassify some releases being better or worse than others unless the usage aspect is taken into account. The effect naturally would be more pronounced for softwares/releases with a large variation in usage. 
+\item The results of our findings also suggest that these observed number of software failures do not depend on all aspects of usage, e.g. we found no dependence between usage intensity or frequency and number of observed exceptions. It suggests that to make a quality measure independent of the external factors like usage, we can not just normalize it by any usage measure, e.g. normalizing the number of exceptions by usage intensity or frequency would not make it independent of external factors. It is important to normalize by the right measure to be able to actually make the quality measure independent of usage. 
+\end{enumerate}
 
 
 
@@ -1355,17 +1353,6 @@ Although we were unable to do a direct comparison to another mobile application,
 
 \section{Limitations}\label{s:limitation}
 
-In terms of modeling aspects, there are some limitations related to the different approaches.
- The RF model was used for 10 fold cross-validation, and exhibited a rather high value of standard deviation in the $R^2$ value, and it even went negative a few times indicating a very bad fit~\cite{negRsq},  likely due to the small sample size and not having good predictors in some models.
-
-While creating the BN model we did not cover all possible ways BNs can be applied to gain insight into the system. For example, we did not investigate the possible existence of any hidden node, or make an effort to formally establish the causal relationship between the nodes. We also did not investigate how the properties of one release affect the subsequent releases, nor did we investigate the presence of any feedback loops.
-
-In the simulation study, although we covered an extensive set of options, we did not try every possible combination of options for the BN structure search exercise.
-
-We also did not use Markov Random Field analysis, which is another probabilistic graphical modeling approach. The primary reason behind choosing the BN approach was that we found an example where this method was used to successfully recover the underlying network~\cite{bnppt}. 
-Moreover, it is possible to interpret a BN model as a causal model, and although we did not use that interpretation in this study, our goal is to eventually establish a causal mechanism of how usage affects the number of exceptions/defects experienced by users, so we wanted to used BN from the start.
-
-
 The accuracy of our result is very much dependent on the Google
 Analytics data. While we do not have reasons to doubt the accuracy of
 the counts in Google
@@ -1395,17 +1382,31 @@ may be censored by our data
 collection date, hence the duration for these releases might be
 underestimated. 
 
+Another limitation associated with using these commercial closed-source 
+mobile applications is that we had no control over the release cycle or the
+variables being measured by Google Analytics. This limited our options for 
+doing the analysis, sometimes 
+severely. We had very few releases for the iOS application, and even the largest
+dataset of GA releases of the Android application had only 173 releases. We had 
+a limited number of observed variables as well. However, we were unable to obtain
+any more data on the applications, forcing us to work with the limited data. 
+However, we tried to increase the validity of our study by looking into three 
+sets of releases for two applications, and used three different modeling approaches 
+to study these datasets. The fact that we saw a strong relationship between the number
+of users and exceptions in all cases has led us to have confidence in the validity
+of our finding. 
+
 It may be possible to collect numerous additional variables that may
 have an impact on exceptions, for example, the number of changes to
 the source code made for a release as was done
 in~\cite{IQ08}. Unfortunately, due to the nature of parallel
 development for multiple releases and products noted in
 subsection~\ref{sub:soft}, it was virtually impossible to separate
-the changes that would only affect the specific release on the Android
+the changes that would only affect a specific release on the Android/iOS
 platform. To further complicate the matter, the mobile applications we studied
 were commercial in nature, and the source code for these were not available.
 However, we were able to find partial commit logs for the source code and the 
-analysis is reported in Appendix I. 
+analysis is reported in \hyperref[app1]{Appendix I}.  
 
 Our model is obtained on a single set of mobile applications 
 from a specific domain, implemented via
@@ -1418,6 +1419,19 @@ specific application, such as increasing number of faults with the
 number of users, has been observed in rather different contexts of
 large-scale server software. This suggests that the model derived in
 the study may generalize to other domains as well. 
+
+
+In terms of modeling aspects, there are some limitations related to the different approaches.
+ The RF model was used for 10 times 2 fold cross-validation, and exhibited a rather high value of standard deviation in the $R^2$ value,  likely due to the small sample size.
+
+While creating the BN model we did not cover all possible ways BNs can be applied to gain insight into the system. For example, we did not investigate the possible existence of any hidden node, or make an effort to formally establish the causal relationship between the nodes. We also did not investigate how the properties of one release affect the subsequent releases, nor did we investigate the presence of any feedback loops. We did not employ any measures to verify the existence/non-existence of any link that appears in the averaged bootstrapped model either.
+
+In the simulation study, although we covered an extensive set of options, we did not try every possible combination of options for the BN structure search exercise.
+
+We also did not use Markov Random Field analysis, which is another probabilistic graphical modeling approach. The primary reason behind choosing the BN approach was that we found an example where this method was used to successfully recover the underlying network~\cite{bnppt}. 
+Moreover, it is possible to interpret a BN model as a causal model, and although we did not use that interpretation in this study, our goal is to eventually establish a causal mechanism of how usage affects the number of exceptions/defects experienced by users, so we wanted to used BN from the start.
+
+
 
 The study of the NPM packages was rather limited in scope, since we
 only looked at the popular (having more than 10,000 monthly downloads 
@@ -1438,15 +1452,19 @@ rather, it was an extension of the concept and its application in a different do
 \section{Conclusion}\label{s:conclusion}
 
 From the practical perspective we have established
-that the extent of use has very strong relationship with the number
+that an external factor like the extent of use has very 
+strong relationship with the observed number
 of exceptions for three large mobile applications from 
-the telecommunication domain. Counting exceptions,
+the telecommunication domain. Counting exceptions, or using any other quality 
+measure dependent on an observed number exceptions, or any other 
+software failure metric (like number of defects or issues) 
 therefore, will not accurately measure the quality of software
 development process but, instead, it would strongly depend on the
 extent of use. In order to produce a measure that the development
 team can use to understand and improve quality of their software
-development process, we proposed to normalize exceptions by usage
-based on the Bayesian Network models. Notably, a similar
+development process, we proposed to normalize the observed exceptions by usage, 
+specifically by number of users or any related measure if it is not 
+available. Notably, a similar
 normalization was previously proposed in the context of post-release
 defects that also exhibited strong positive correlation with the
 number of users.  As a larger proportion of applications are mobile
@@ -1455,7 +1473,7 @@ easily collected.  Consequently, not adjusting software
 development measures for usage should not be considered as an
 excusable practice.
 
-From the theoretical perspective we provided the explanation of the
+From theoretical perspective we provided the explanation of the
 relationships among post-deployment quantities using Linear
 Regression and Bayesian Networks. Linear Regression can be thought
 as a special Bayesian Network with the response node being
@@ -1464,16 +1482,14 @@ allow for exploration of relationships among all variables and
 empirical determination of the relationships exhibited in a
 particular dataset.  For all three mobile softwares analyzed, the number of users was found to be the most significant predictor with both the models. It would be preferable to have each release as a separate
 categorical predictor, but because for simplicity we chose to use
-only one observation per release, it could not be done. If, instead,
-we considered exceptions during different periods of a release, that
-would have allowed us to introduce such categorical variable and
-interpret the estimated coefficient for each release as release
-quality (higher number meaning lower quality).
+only one observation per release.
 
 We also established
 that it is possible to predict exceptions using Random Forest
 modeling techniques and that usage plays a key role for the accuracy
-of these predictions. However, the performance of the predictive model was not consistently good, since, as noted above, prediction is a different task
+of these predictions. However, the performance of the predictive model 
+was not consistently good, since we did not have any internal factor as a 
+predictor and, as noted above, prediction is a different task
 than explanation and, even though it often yields more accurate
 results, the prediction results may be harder to explain to
 developers or managers and, therefore, harder to act upon. We
